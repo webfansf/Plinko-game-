@@ -2,205 +2,155 @@
 <html lang="ar" dir="rtl">
 <head>
 <meta charset="UTF-8">
-<title>Plinko</title>
+<title>PLINKO</title>
 <style>
     body {
         margin: 0;
-        padding: 0;
-        background: #0a3cff;
         font-family: Arial, sans-serif;
+        background: linear-gradient(#0a4cff, #0033aa);
+        color: #fff;
         overflow-x: hidden;
-        color: white;
     }
 
-    /* الكرات الحمراء */
-    .ball {
-        position: absolute;
-        width: 80px;
-        height: 80px;
-        background: rgba(255,0,0,0.5);
-        border-radius: 50%;
-        filter: blur(8px);
-        animation: float 6s infinite alternate;
-    }
-    @keyframes float {
-        from { transform: translateY(0px); }
-        to { transform: translateY(80px); }
-    }
-
-    /* كلمة plinko */
-    h1 {
+    /* كلمة PLINKO */
+    .title {
+        font-size: 70px;
         text-align: center;
-        font-size: 80px;
         font-weight: bold;
-        color: white;
-        margin-top: 40px;
-        text-shadow: 0 0 25px #fff, 0 0 35px #00f;
-        animation: glow 2s infinite alternate;
+        margin-top: 30px;
+        animation: glow 2s infinite alternate, move 6s infinite linear;
     }
     @keyframes glow {
-        from { text-shadow: 0 0 15px #fff; }
-        to { text-shadow: 0 0 35px #0ff; }
+        from { text-shadow: 0 0 10px white; }
+        to { text-shadow: 0 0 30px white; }
+    }
+    @keyframes move {
+        0% { transform: translateX(-20px); }
+        50% { transform: translateX(20px); }
+        100% { transform: translateX(-20px); }
     }
 
-    /* العروض */
-    .offers {
-        display: grid;
-        grid-template-columns: repeat(2, 1fr);
-        gap: 15px;
-        width: 90%;
-        margin: auto;
-        margin-top: 20px;
+    /* النص تحت كلمة PLINKO */
+    .subtitle {
+        text-align: center;
+        margin-top: -10px;
+        font-size: 18px;
     }
-    .offer {
+
+    /* شريط العملاء */
+    .marquee-box {
+        width: 100%;
+        overflow: hidden;
         background: rgba(255,255,255,0.15);
-        padding: 15px;
-        border-radius: 10px;
-        font-size: 20px;
+        padding: 10px 0;
+        margin-top: 25px;
+        border-top: 2px solid #ffffff55;
+        border-bottom: 2px solid #ffffff55;
+    }
+    .marquee {
+        display: inline-block;
+        white-space: nowrap;
+        animation: scroll 35s linear infinite;
+        font-size: 18px;
+        font-weight: bold;
+    }
+    @keyframes scroll {
+        0% { transform: translateX(100%); }
+        100% { transform: translateX(-100%); }
+    }
+
+    /* صندوق العروض */
+    .offers {
+        max-width: 420px;
+        margin: auto;
+        margin-top: 35px;
+        background: rgba(255,255,255,0.12);
+        padding: 20px;
+        border-radius: 12px;
+        backdrop-filter: blur(5px);
+    }
+    .offers h2 {
+        margin: 0 0 10px 0;
         text-align: center;
     }
 
     /* الفورم */
-    .form {
-        width: 90%;
-        margin: auto;
-        margin-top: 30px;
-        background: rgba(255,255,255,0.15);
-        padding: 20px;
-        border-radius: 15px;
-    }
-    input {
+    input, select {
         width: 100%;
-        padding: 12px;
+        padding: 10px;
         border: none;
-        margin-bottom: 10px;
-        border-radius: 6px;
-        font-size: 18px;
+        border-radius: 8px;
+        margin-top: 10px;
+        font-size: 16px;
     }
     button {
         width: 100%;
         padding: 12px;
+        margin-top: 15px;
+        font-size: 18px;
+        font-weight: bold;
+        background: white;
+        color: #0033aa;
         border: none;
-        background: #ff0044;
-        color: white;
-        font-size: 22px;
         border-radius: 8px;
         cursor: pointer;
     }
+    button:hover {
+        background: #e5e5e5;
+    }
 
-    /* الشريط */
-    .marquee {
-        margin-top: 40px;
-        background: rgba(255,255,255,0.15);
-        padding: 10px;
-        white-space: nowrap;
-        overflow: hidden;
-        width: 100%;
-        font-size: 20px;
-    }
-    .marquee div {
-        display: inline-block;
-        padding-left: 100%;
-        animation: scroll 18s linear infinite;
-    }
-    @keyframes scroll {
-        from { transform: translateX(0); }
-        to { transform: translateX(-100%); }
-    }
 </style>
 </head>
 <body>
 
-<!-- الكرات -->
-<div class="ball" style="top:50px; left:20px;"></div>
-<div class="ball" style="top:200px; right:40px;"></div>
-<div class="ball" style="top:350px; left:80px;"></div>
+<div class="title">PLINKO</div>
 
-<h1>PLINKO</h1>
-
-<!-- العروض الشبكية -->
-<div class="offers">
-    <div class="offer">عرض 200ج → يكسب 2600ج</div>
-    <div class="offer">عرض 300ج → يكسب 3400ج</div>
-    <div class="offer">عرض 500ج → يكسب 5200ج</div>
-    <div class="offer">عرض 800ج → يكسب 9000ج</div>
-    <div class="offer">عرض 1000ج → يكسب 12,000ج</div>
-    <div class="offer">عرض 2000ج → يكسب 25,000ج</div>
+<div class="subtitle">
+    الموقع الرسمي للشركه تقدر تشترك من خلاله أو من خلال خدمة العملاء على الماسنجر
 </div>
 
-<!-- الفورم -->
-<div class="form">
-    <h2 style="text-align:center;">طلب اشتراك</h2>
-    <input id="name" type="text" placeholder="اكتب اسمك">
-    <input id="wallet" type="text" placeholder="رقم المحفظة للتحويل والاستلام">
-
-    <button onclick="send()">طلب اشتراك</button>
-</div>
-
-<script>
-function send() {
-    let name = document.getElementById('name').value;
-    let wallet = document.getElementById('wallet').value;
-
-    let msg = `طلب اشتراك جديد:\nالاسم: ${name}\nرقم المحفظة: ${wallet}`;
-    window.location.href = "https://m.me/yourpage?text=" + encodeURIComponent(msg);
-}
-</script>
-
-<!-- شريط التعليقات -->
-<div class="marquee">
-    <div>
-        ⭐ أحمد سمير: خدمة ممتازة — 
-        ⭐ محمد حجازي: تعامل محترم — 
-        ⭐ يوسف الشريف: انصح بيه — 
-        ⭐ كريم عادل: تجربة جميلة —
-        ⭐ حسين رأفت: شغل عالي —
-        ⭐ محمود مرسي: تمام جدا —
-        ⭐ علي فريد: منصة منظمة —
-        ⭐ أشرف عويس: تمام —
-        ⭐ عمر خالد: خدمة سريعة —
-        ⭐ سامح بدوي: تمام جدا —
-        ⭐ ابراهيم ناجي: الناس كويسة —
-        ⭐ حسام ممدوح: شغل محترم —
-        ⭐ هشام كمال: تجربة لطيفة —
-        ⭐ مروان ربيع: تمام —
-        ⭐ يحيي منصور: ممتاز —
-        ⭐ فادي نجيب: خدمة هايلة —
-        ⭐ شريف عادل: تعامل جميل —
-        ⭐ ياسر عبدالسلام: تمام —
-        ⭐ طارق فتحي: عشرة/عشرة —
-        ⭐ خالد جمعة: تجربة ناجحة —
-        ⭐ مصطفى فوزي: تمام —
-        ⭐ نادر مجدي: ممتاز —
-        ⭐ جمال عبدون: محترم —
-        ⭐ عادل ربيع: شغل عالي —
-        ⭐ زياد عبدالحليم: فكر كويس —
-        ⭐ محمود الشرقاوي: خدمة تمام —
-        ⭐ آية يوسف: تجربة شيك —
-        ⭐ منة رأفت: ناس محترمة —
-        ⭐ سارة الجندي: ممتاز —
-        ⭐ ندى سمير: تجربة حلوة —
-        ⭐ منار خالد: تمام —
-        ⭐ داليا فهمي: شغل عالي —
-        ⭐ نوران علي: خدمة لطيفة —
-        ⭐ هاجر منصور: تجربة ممتازة —
-        ⭐ رحاب عبدالمجيد: شكرًا —
-        ⭐ ريم عادل: تمام جدا —
-        ⭐ هبة إسماعيل: تجربة لطيفة —
-        ⭐ آلاء نصر: ناس محترمين —
-        ⭐ جميلة عطية: ممتاز —
-        ⭐ شيماء جابر: خدمة محترمة —
-        ⭐ مي حمدي: جميل —
-        ⭐ ياسمين ربيع: تجربة هايلة —
-        ⭐ نغم عادل: تمام —
-        ⭐ ملك فريد: ممتاز —
-        ⭐ جنى يوسف: جميل —
-        ⭐ هاجر عادل: خدمة ممتازة —
-        ⭐ بسمة فتحي: تمام جدا —
-        ⭐ دنيا منصور: انصح بالتجربة —
-        ⭐ نجلاء حسين: الناس ذوق —
-        ⭐ شروق عبدالسلام: ممتاز —
+<!-- شريط العملاء -->
+<div class="marquee-box">
+    <div class="marquee">
+        أحمد شريف • منى فوزي • كريم نبيل • سارة محسن •
+        محمد طارق • هدى محمود • بيشوي سامي • رانيا يوسف •
+        ياسر عادل • ناهد صابر • عمر الجزار • حبيبة أحمد •
+        مصطفى عبدالسلام • مريم فؤاد • هاني حسين • داليا مراد •
+        وليد حسن • مها صبري • خالد فهيم • شيماء حاتم •
+        سامح لطفي • نورهان عادل • رضا سالم • هبة جمال •
+        تامر شاكر • غادة منصور • أحمد رمضان • علي صابر •
+        يمنى علاء • شريف عماد • ندى جمال • يوسف هاني •
+        إسلام مراد • هاجر محمد • إياد كريم • لارا منصور •
+        حسام محمود • رحاب وليد • فادي لطفي • ميسون شريف •
+        مهند عادل • ملك محمود • طارق عبدالعزيز • شروق سامي •
+        فاطمة يوسف • زينب صابر • ماهر إسماعيل • أميرة هاني •
+        أحمد أشرف • جميلة أنور
     </div>
+</div>
+
+<!-- العروض -->
+<div class="offers">
+    <h2>العــروض</h2>
+
+    <form>
+        <label>اختار العرض:</label>
+        <select required>
+            <option value="">اختر عرض</option>
+            <option>120</option>
+            <option>240</option>
+            <option>360</option>
+            <option>480</option>
+            <option>600</option>
+        </select>
+
+        <label>الاسم:</label>
+        <input type="text" placeholder="اكتب اسمك" required>
+
+        <label>رقم الهاتف:</label>
+        <input type="text" placeholder="رقم الهاتف" required>
+
+        <button type="submit">تقديم الطلب</button>
+    </form>
 </div>
 
 </body>
