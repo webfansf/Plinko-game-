@@ -3,54 +3,74 @@
 <head>
 <meta charset="UTF-8">
 <title>PLINKO</title>
+
 <style>
     body {
         margin: 0;
-        font-family: Arial, sans-serif;
-        background: linear-gradient(#0a4cff, #0033aa);
-        color: #fff;
+        font-family: 'Arial';
+        background: linear-gradient(135deg, #0a4cff, #002b7f);
         overflow-x: hidden;
+        color: #fff;
     }
 
-    /* كلمة PLINKO */
+    /* كرات ضبابية */
+    .ball {
+        position: absolute;
+        width: 120px;
+        height: 120px;
+        background: rgba(255, 0, 0, 0.25);
+        filter: blur(40px);
+        border-radius: 50%;
+        animation: float 6s infinite ease-in-out;
+    }
+    @keyframes float {
+        0% { transform: translateY(0px); }
+        50% { transform: translateY(-40px); }
+        100% { transform: translateY(0px); }
+    }
+
+    .ball:nth-child(1) { top: 20%; left: 10%; }
+    .ball:nth-child(2) { top: 50%; left: 60%; }
+    .ball:nth-child(3) { top: 75%; left: 25%; }
+
+    /* عنوان PLINKO */
     .title {
-        font-size: 70px;
+        margin-top: 40px;
         text-align: center;
+        font-size: 80px;
         font-weight: bold;
-        margin-top: 30px;
-        animation: glow 2s infinite alternate, move 6s infinite linear;
+        letter-spacing: 3px;
+        animation: glow 2s infinite alternate, move 5s infinite ease-in-out;
     }
     @keyframes glow {
-        from { text-shadow: 0 0 10px white; }
-        to { text-shadow: 0 0 30px white; }
+        from { text-shadow: 0 0 10px #fff; }
+        to { text-shadow: 0 0 25px #fff; }
     }
     @keyframes move {
-        0% { transform: translateX(-20px); }
-        50% { transform: translateX(20px); }
-        100% { transform: translateX(-20px); }
+        0% { transform: translateX(-15px); }
+        50% { transform: translateX(15px); }
+        100% { transform: translateX(-15px); }
     }
 
-    /* النص تحت كلمة PLINKO */
+    /* النص تحت PLINKO */
     .subtitle {
         text-align: center;
         margin-top: -10px;
-        font-size: 18px;
+        font-size: 20px;
     }
 
     /* شريط العملاء */
     .marquee-box {
         width: 100%;
+        margin-top: 20px;
         overflow: hidden;
         background: rgba(255,255,255,0.15);
         padding: 10px 0;
-        margin-top: 25px;
-        border-top: 2px solid #ffffff55;
-        border-bottom: 2px solid #ffffff55;
     }
     .marquee {
-        display: inline-block;
         white-space: nowrap;
-        animation: scroll 35s linear infinite;
+        display: inline-block;
+        animation: scroll 40s linear infinite;
         font-size: 18px;
         font-weight: bold;
     }
@@ -59,99 +79,150 @@
         100% { transform: translateX(-100%); }
     }
 
-    /* صندوق العروض */
+    /* قسم العروض */
     .offers {
-        max-width: 420px;
-        margin: auto;
-        margin-top: 35px;
-        background: rgba(255,255,255,0.12);
-        padding: 20px;
-        border-radius: 12px;
-        backdrop-filter: blur(5px);
-    }
-    .offers h2 {
-        margin: 0 0 10px 0;
+        width: 90%;
+        max-width: 900px;
+        margin: 40px auto;
         text-align: center;
     }
 
-    /* الفورم */
-    input, select {
-        width: 100%;
-        padding: 10px;
-        border: none;
-        border-radius: 8px;
-        margin-top: 10px;
-        font-size: 16px;
+    .offers-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+        gap: 20px;
+        margin-top: 20px;
     }
-    button {
+
+    .offer-box {
+        background: rgba(255,255,255,0.15);
+        padding: 15px;
+        border-radius: 12px;
+        font-size: 20px;
+        font-weight: bold;
+        backdrop-filter: blur(5px);
+    }
+
+    /* الفورم */
+    .form-box {
+        width: 90%;
+        max-width: 450px;
+        margin: 30px auto;
+        background: rgba(255,255,255,0.15);
+        padding: 25px;
+        border-radius: 12px;
+        backdrop-filter: blur(5px);
+    }
+
+    select, input {
         width: 100%;
         padding: 12px;
+        margin-top: 10px;
+        border-radius: 8px;
+        border: none;
+        font-size: 17px;
+    }
+
+    button {
+        width: 100%;
+        padding: 15px;
         margin-top: 15px;
-        font-size: 18px;
-        font-weight: bold;
         background: white;
         color: #0033aa;
+        border-radius: 10px;
         border: none;
-        border-radius: 8px;
+        font-size: 18px;
+        font-weight: bold;
         cursor: pointer;
-    }
-    button:hover {
-        background: #e5e5e5;
     }
 
 </style>
 </head>
 <body>
 
+<!-- كرات ضبابية -->
+<div class="ball"></div>
+<div class="ball"></div>
+<div class="ball"></div>
+
 <div class="title">PLINKO</div>
 
 <div class="subtitle">
-    الموقع الرسمي للشركه تقدر تشترك من خلاله أو من خلال خدمة العملاء على الماسنجر
+    الموقع الرسمي للشركة — يمكنك الاشتراك من خلاله أو عبر خدمة العملاء على الماسنجر
 </div>
 
 <!-- شريط العملاء -->
 <div class="marquee-box">
     <div class="marquee">
-        أحمد شريف • منى فوزي • كريم نبيل • سارة محسن •
-        محمد طارق • هدى محمود • بيشوي سامي • رانيا يوسف •
-        ياسر عادل • ناهد صابر • عمر الجزار • حبيبة أحمد •
-        مصطفى عبدالسلام • مريم فؤاد • هاني حسين • داليا مراد •
-        وليد حسن • مها صبري • خالد فهيم • شيماء حاتم •
-        سامح لطفي • نورهان عادل • رضا سالم • هبة جمال •
-        تامر شاكر • غادة منصور • أحمد رمضان • علي صابر •
-        يمنى علاء • شريف عماد • ندى جمال • يوسف هاني •
-        إسلام مراد • هاجر محمد • إياد كريم • لارا منصور •
-        حسام محمود • رحاب وليد • فادي لطفي • ميسون شريف •
-        مهند عادل • ملك محمود • طارق عبدالعزيز • شروق سامي •
-        فاطمة يوسف • زينب صابر • ماهر إسماعيل • أميرة هاني •
-        أحمد أشرف • جميلة أنور
+        أحمد شريف • منى فوزي • كريم نبيل • سارة محسن • محمد طارق • هدى محمود • 
+        رانيا يوسف • بيشوي سامي • ياسر عادل • ناهد صابر • هاني حسين • داليا مراد • 
+        وليد حسن • شيماء حاتم • نورهان عادل • رضا سالم • مريم فؤاد • خالد فهيم • 
+        ندى جمال • يوسف هاني • مها صبري • تامر شاكر • غادة منصور • أحمد رمضان • 
+        علي صابر • شريف عماد • يمنى علاء • إسلام مراد • هاجر محمد • إياد كريم • 
+        مهند عادل • ملك محمود • شروق سامي • فاطمة يوسف • زينب صابر • 
+        ماهر إسماعيل • أميرة هاني • جميلة أنور • رحاب وليد • فادي لطفي • 
+        لارا منصور • حسام محمود • ميسون شريف • أحمد أشرف • سالي فؤاد • 
+        منار حسين • عماد شعبان • سهير أحمد • يوسف تامر • مروان لطفي
     </div>
 </div>
 
-<!-- العروض -->
+<!-- قسم العروض -->
 <div class="offers">
-    <h2>العــروض</h2>
+    <h2 style="font-size:32px;">العــروض</h2>
 
-    <form>
-        <label>اختار العرض:</label>
-        <select required>
-            <option value="">اختر عرض</option>
-            <option>120</option>
-            <option>240</option>
-            <option>360</option>
-            <option>480</option>
-            <option>600</option>
-        </select>
-
-        <label>الاسم:</label>
-        <input type="text" placeholder="اكتب اسمك" required>
-
-        <label>رقم الهاتف:</label>
-        <input type="text" placeholder="رقم الهاتف" required>
-
-        <button type="submit">تقديم الطلب</button>
-    </form>
+    <div class="offers-grid">
+        <div class="offer-box">200 → 2600</div>
+        <div class="offer-box">300 → 3400</div>
+        <div class="offer-box">500 → 5200</div>
+        <div class="offer-box">800 → 9000</div>
+        <div class="offer-box">1000 → 12000</div>
+        <div class="offer-box">2000 → 25000</div>
+    </div>
 </div>
+
+<!-- الفورم -->
+<div class="form-box">
+    <h3 style="text-align:center;font-size:26px;">طلب اشتراك</h3>
+
+    <select id="offer">
+        <option value="">اختر العرض</option>
+        <option>200 → 2600</option>
+        <option>300 → 3400</option>
+        <option>500 → 5200</option>
+        <option>800 → 9000</option>
+        <option>1000 → 12000</option>
+        <option>2000 → 25000</option>
+    </select>
+
+    <input id="name" type="text" placeholder="الاسم">
+    <input id="phone" type="text" placeholder="رقم التواصل">
+
+    <button onclick="copyData()">نسخ بيانات الاشتراك</button>
+
+    <button onclick="openMessenger()">فتح الماسنجر</button>
+</div>
+
+
+<script>
+function copyData() {
+    let offer = document.getElementById("offer").value;
+    let name = document.getElementById("name").value;
+    let phone = document.getElementById("phone").value;
+
+    let text =
+`طلب اشتراك:
+الاسم: ${name}
+رقم التواصل: ${phone}
+العرض المختار: ${offer}`;
+
+    navigator.clipboard.writeText(text);
+    alert("تم نسخ بياناتك — الآن اضغط (فتح الماسنجر) وألصق الرسالة.");
+}
+
+function openMessenger() {
+    window.open("https://www.facebook.com/profile.php?id=61576556411731", "_blank");
+}
+</script>
 
 </body>
 </html>
