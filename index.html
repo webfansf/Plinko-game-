@@ -208,19 +208,24 @@ footer{margin:20px;text-align:center;font-size:13px;opacity:0.9}
       });
     });
 
-    // إرسال الطلب (محلي - يظهر رسالة فقط). هنا يمكنك ربط API لاحقًا.
-    document.getElementById('signup').addEventListener('submit',function(e){
+    // إرسال الطلب — إعادة توجيه للماسنجر مع البيانات
+    document.getElementById('signup').addEventListener('submit', function(e){
       e.preventDefault();
       const name = this.name.value.trim();
       const mobile = this.mobile.value.trim();
       const plan = this.plan.value;
+
       if(!name || !mobile){
         showMsg('من فضلك اكمل الحقول المطلوبة');
         return;
       }
-      // هنا يمكن اضافة طلب fetch لAPI لتخزين الطلبات على السيرفر
-      showMsg('تم استلام طلبك! سنقوم بالتواصل معك عبر رقم المحفظة لتأكيد الاشتراك.');
-      this.reset();
+
+      // تكوين الرسالة
+      const msg = `طلب اشتراك جديد:%0Aالاسم: ${name}%0Aالمحفظة: ${mobile}%0Aالخطة: ${plan} ج`; 
+
+      // إعادة التوجيه للماسنجر
+      window.location.href = "https://m.me/61576556411731?ref=" + msg;
+    }();
     });
 
     function showMsg(txt){
