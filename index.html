@@ -1,116 +1,174 @@
 <!DOCTYPE html><html lang="ar" dir="rtl">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <title>PLINKO</title>
 <style>
-body {
-  margin: 0;
-  font-family: sans-serif;
-  background: #003f7d;
-  color: #fff;
-  overflow-x: hidden;
-}
+    body {
+        margin: 0;
+        font-family: Arial, sans-serif;
+        background: #0a57ff;
+        overflow-x: hidden;
+        color: #fff;
+        text-align: center;
+    }/* خلفية كرات حمراء ضبابية */
 .ball {
-  position: absolute;
-  width: 80px;
-  height: 80px;
-  background: rgba(255,0,0,0.4);
-  border-radius: 50%;
-  filter: blur(8px);
-  animation: float 6s infinite ease-in-out;
+    position: absolute;
+    width: 80px;
+    height: 80px;
+    background: rgba(255,0,0,0.4);
+    border-radius: 50%;
+    filter: blur(8px);
+    animation: float 6s infinite linear;
 }
+
 @keyframes float {
-  0% { transform: translateY(0px); }
-  50% { transform: translateY(-30px); }
-  100% { transform: translateY(0px); }
+    0% { transform: translateY(0); }
+    100% { transform: translateY(100vh); }
 }
+
+/* كلمة PLINKO */
 .title {
-  text-align: center;
-  font-size: 55px;
-  font-weight: 900;
-  margin-top: 40px;
-  color: #fff;
-  animation: glow 2s infinite alternate ease-in-out;
+    font-size: 60px;
+    font-weight: bold;
+    margin-top: 40px;
+    animation: glow 1.5s infinite ease-in-out;
 }
+
 @keyframes glow {
-  from { text-shadow: 0 0 10px #fff; }
-  to   { text-shadow: 0 0 25px #00c8ff; }
+    0% { text-shadow: 0 0 10px white; }
+    100% { text-shadow: 0 0 25px white; }
 }
-.sub-text {
-  text-align: center;
-  font-size: 18px;
-  margin-top: -10px;
-  color: #d8ecff;
+
+.subtitle {
+    margin-top: -10px;
+    font-size: 14px;
+    opacity: 0.9;
 }
+
+/* أزرار العروض */
 .offers {
-  display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  gap: 15px;
-  width: 90%;
-  margin: 35px auto;
+    margin-top: 25px;
+    width: 90%;
+    margin-left: auto;
+    margin-right: auto;
 }
-.offer-box {
-  background: rgba(255,255,255,0.09);
-  padding: 15px;
-  text-align: center;
-  border-radius: 14px;
-  backdrop-filter: blur(6px);
-  border: 1px solid rgba(255,255,255,0.08);
-  transition: 0.3s;
+
+.offer-btn {
+    width: 100%;
+    padding: 15px;
+    margin-bottom: 12px;
+    background: rgba(255,255,255,0.15);
+    border: 1px solid rgba(255,255,255,0.25);
+    border-radius: 12px;
+    font-size: 20px;
+    font-weight: bold;
+    color: #fff;
+    backdrop-filter: blur(4px);
 }
-.offer-box:hover {
-  transform: scale(1.05);
+
+/* الفورم */
+.form-box {
+    width: 90%;
+    margin: 25px auto;
+    background: rgba(255,255,255,0.15);
+    padding: 15px;
+    border-radius: 15px;
+    border: 1px solid rgba(255,255,255,0.25);
+    backdrop-filter: blur(4px);
 }
-.form-section {
-  width: 90%;
-  margin: 20px auto;
-  background: rgba(255,255,255,0.07);
-  padding: 18px;
-  border-radius: 14px;
-  backdrop-filter: blur(6px);
+
+input, select {
+    width: 95%;
+    padding: 12px;
+    margin-bottom: 12px;
+    border-radius: 8px;
+    border: none;
+    font-size: 16px;
 }
-.form-section input,
-.form-section select {
-  width: 100%;
-  padding: 12px;
-  margin-top: 8px;
-  border-radius: 10px;
-  border: none;
-  background: rgba(255,255,255,0.15);
-  color: #fff;
-}
+
 .send-btn {
-  width: 100%;
-  padding: 12px;
-  margin-top: 12px;
-  background: #00aaff;
-  border: none;
-  border-radius: 10px;
-  font-weight: bold;
-  font-size: 17px;
-  color: #fff;
-  cursor: pointer;
+    width: 100%;
+    padding: 15px;
+    background: #ffffff;
+    color: #0a57ff;
+    border-radius: 10px;
+    font-size: 20px;
+    font-weight: bold;
 }
-.reviews {
-  width: 90%;
-  margin: 35px auto;
+
+/* شريط العملاء */
+.marquee {
+    width: 100%;
+    white-space: nowrap;
+    overflow: hidden;
+    margin-top: 25px;
+    font-size: 18px;
+    background: rgba(0,0,0,0.2);
+    padding: 10px;
 }
-.review-box {
-  background: rgba(255,255,255,0.06);
-  padding: 12px;
-  border-radius: 10px;
-  margin-bottom: 10px;
-  border: 1px solid rgba(255,255,255,0.07);
+
+.marquee span {
+    display: inline-block;
+    padding-left: 100%;
+    animation: scroll 18s linear infinite;
 }
+
+@keyframes scroll {
+    from { transform: translateX(0); }
+    to { transform: translateX(-100%); }
+}
+
 </style>
 </head>
-<body>
-<div class="ball" style="top:20%; left:10%;"></div>
-<div class="ball" style="top:60%; left:70%;"></div>
-<div class="ball" style="top:40%; left:30%;"></div><h1 class="title">PLINKO</h1>
-<p class="sub-text">الموقع الرسمي — تقدر تشترك من خلاله بكل أمان وسهولة</p><div class="offers">
-  <div class="offer-box">عرض 200 ج</div>
-  <div class="offer-box">عرض 300 ج</div>
-  <div class="offer-box">عرض 500 ج</div>
-  <div class="
+<body><!-- كرات في الخلفية --><div class="ball" style="left:10%; animation-duration:7s;"></div>
+<div class="ball" style="left:40%; animation-duration:9s;"></div>
+<div class="ball" style="left:70%; animation-duration:6s;"></div>
+<div class="ball" style="left:85%; animation-duration:8s;"></div><!-- العنوان --><div class="title">PLINKO</div>
+<div class="subtitle">الموقع الرسمي للشركة — تقدر تشترك من خلاله أو من خلال خدمة العملاء على الماسنجر</div><!-- العروض --><div class="offers">
+    <button class="offer-btn">عرض 200</button>
+    <button class="offer-btn">عرض 300</button>
+    <button class="offer-btn">عرض 500</button>
+    <button class="offer-btn">عرض 800</button>
+    <button class="offer-btn">عرض 1000</button>
+    <button class="offer-btn">عرض 2000</button>
+</div><!-- الفورم --><div class="form-box">
+    <input type="text" id="name" placeholder="الاسم بالكامل" required />
+    <input type="text" id="wallet" placeholder="رقم المحفظة" required /><select id="offer">
+    <option selected disabled>اختار العرض</option>
+    <option>عرض 200</option>
+    <option>عرض 300</option>
+    <option>عرض 500</option>
+    <option>عرض 800</option>
+    <option>عرض 1000</option>
+    <option>عرض 2000</option>
+</select>
+
+<button class="send-btn" onclick="sendMsg()">ارسال الطلب</button>
+
+</div><!-- شريط العملاء --><div class="marquee">
+    <span>
+        محمد سالم • أحمد جابر • منى حسين • فاطمة رجب • كريم صبري • محمود مجدي • سارة خالد • خالد عاطف • 
+        نسرين جمال • يوسف رمضان • حسام حمدي • دعاء محمود • إيمان عبد الله • هاني ناصر • كريم راضي • 
+        أحمد طه • شيماء سمير • ندا حسن • علي جمال • يسرا كمال • مصطفى بدوي • مروة سيد • خالد حجازي • 
+        سناء عبد الله • محمود ربيع • أحمد خطاب • هاجر محمد • هبة عماد • ريم فوزي • مازن مراد • 
+        فادي علاء • نادر خلف • أمل متولي • أسماء لطفي • سلوى عادل • يونس أحمد • رامي محسن • 
+        دينا إبراهيم • بسمة عبد الله • مصطفى شريف • نورهان سلام • محمد بدري • دعاء جمال • 
+        سارة صابر • يوسف محمد • إكرام خالد • ميادة حسن • حسام عبد الفتاح • هيثم محمود • 
+    </span>
+</div><script>
+function sendMsg() {
+    let name = document.getElementById("name").value;
+    let wallet = document.getElementById("wallet").value;
+    let offer = document.getElementById("offer").value;
+
+    if (!name || !wallet || offer === "اختار العرض") {
+        alert("يرجى إدخال جميع البيانات");
+        return;
+    }
+
+    let msg = `طلب اشتراك جديد:%0Aالاسم: ${name}%0Aرقم المحفظة: ${wallet}%0Aالعرض المختار: ${offer}`;
+    window.location.href = `https://m.me/587333667807395?text=${msg}`;
+}
+</script></body>
+</html>
