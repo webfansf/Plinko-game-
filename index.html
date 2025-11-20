@@ -1,91 +1,256 @@
-<!DOCTYPE html><html lang="ar" dir="rtl">
+<!doctype html>
+<html lang="ar">
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>Pilanko - عروض اشتراك</title>
-  <style>
-    :root{--blue1:#062a6b;--blue2:#0a3d91;--accent:#ff3b3b}
-    *{box-sizing:border-box}
-    body{margin:0;font-family:system-ui,-apple-system,Segoe UI,Roboto,'Helvetica Neue',Arial; background: radial-gradient(ellipse at 10% 10%, rgba(10,61,145,0.12), transparent 20%), linear-gradient(180deg,var(--blue1),var(--blue2)); color:#fff;direction:rtl}
-    header{padding:36px 20px;text-align:center;position:relative;overflow:hidden}/* PLINKO animated title */
-.plinko-wrap{color:#fff;text-shadow:0 0 12px rgba(255,255,255,0.9),0 0 22px rgba(255,255,255,0.6);font-weight:900;letter-spacing:6px;font-size:92px;color:#fff;text-shadow:0 0 18px rgba(255,255,255,0.9);display:inline-block;padding:8px 18px;border-radius:16px;background:rgba(0,0,0,0.25);backdrop-filter:blur(6px)}
-@keyframes floaty{0%{transform:translateY(0)}50%{transform:translateY(-14px)}100%{transform:translateY(0)}}
-.plinko-wrap{animation:floaty 3.6s ease-in-out infinite}
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>Plinko — عرض تجريبي</title>
+<style>
+  /* عام */
+  :root{
+    --bg:#053a8a;
+    --glow:#ffffff;
+    --accent:#ff3b3b;
+  }
+  html,body{height:100%;margin:0;font-family: "Segoe UI", Tahoma, Arial, sans-serif;direction:rtl}
+  .page{
+    min-height:100%;
+    background: radial-gradient(circle at 10% 10%, rgba(255,255,255,0.03), transparent 10%),
+                linear-gradient(180deg, rgba(5,58,138,1) 0%, rgba(2,33,80,1) 100%);
+    overflow:hidden;
+    position:relative;
+    color:#fff;
+    padding:40px 20px;
+    box-sizing:border-box;
+  }
 
-/* misty red balls */
-.balls{position:absolute;inset:0;pointer-events:none}
-.ball{position:absolute;width:80px;height:80px;border-radius:50%;background:radial-gradient(circle at 30% 30%, rgba(255,100,100,0.95), rgba(255,10,10,0.7));filter:blur(6px) saturate(120%);opacity:0.9}
+  /* ضباب وكرات حمراء */
+  .fog{position:absolute;inset:0;pointer-events:none;mix-blend-mode:screen;opacity:0.35;background:
+    radial-gradient(600px 200px at 10% 20%, rgba(255,255,255,0.03), transparent 20%),
+    radial-gradient(500px 180px at 90% 80%, rgba(255,255,255,0.02), transparent 20%);}
+  .ball {
+    position:absolute;
+    width:140px;height:140px;border-radius:50%;
+    filter:blur(18px) saturate(140%);
+    background:radial-gradient(circle at 40% 35%, rgba(255,120,120,0.95), rgba(255,20,20,0.7) 50%, rgba(120,10,10,0.2));
+    opacity:0.9;
+    mix-blend-mode:screen;
+    transform: translate3d(0,0,0);
+    animation: float 8s ease-in-out infinite;
+  }
+  /* توزيع عدة كرات بحركات مختلفة */
+  .ball.b1{top:10%; left:5%; width:200px;height:200px; animation-duration:10s}
+  .ball.b2{top:25%; right:8%; width:160px;height:160px; animation-duration:8s; animation-delay:1s}
+  .ball.b3{bottom:5%; left:18%; width:180px;height:180px; animation-duration:12s; animation-delay:2s}
+  .ball.b4{bottom:12%; right:20%; width:120px;height:120px; animation-duration:9s; animation-delay:0.5s}
+  .ball.b5{top:45%; left:45%; width:220px;height:220px; animation-duration:14s; opacity:0.6}
+  @keyframes float {
+    0%{transform: translateY(0px) translateX(0px) scale(1)}
+    50%{transform: translateY(-30px) translateX(20px) scale(1.03)}
+    100%{transform: translateY(0px) translateX(0px) scale(1)}
+  }
 
-main{max-width:980px;margin:26px auto;padding:18px}
-.card{background:rgba(0,0,0,0.35);border-radius:14px;padding:18px;margin-bottom:18px;box-shadow:0 6px 20px rgba(0,0,0,0.36)}
+  /* العنوان الكبير المتحرك والمضيء */
+  .hero{
+    position:relative; z-index:5;
+    text-align:center;
+    margin-bottom:30px;
+  }
+  .plinko{
+    font-size:96px; font-weight:900;
+    letter-spacing:6px;
+    color:#fff;
+    display:inline-block;
+    padding:10px 30px;
+    border-radius:20px;
+    background:linear-gradient(90deg, rgba(255,255,255,0.04), rgba(255,255,255,0.02));
+    box-shadow: 0 10px 30px rgba(0,0,0,0.4), 0 0 40px rgba(255,255,255,0.08) inset;
+    transform: translateY(0);
+    animation: bob 3s ease-in-out infinite, glow 2.8s ease-in-out infinite;
+    text-shadow: 0 0 12px rgba(255,255,255,0.12), 0 6px 18px rgba(0,0,0,0.6);
+  }
+  @keyframes bob{
+    0%{transform: translateY(0) rotate(-1deg)}
+    50%{transform: translateY(-14px) rotate(2deg)}
+    100%{transform: translateY(0) rotate(-1deg)}
+  }
+  @keyframes glow{
+    0%{box-shadow: 0 0 6px rgba(255,255,255,0.06), 0 0 30px rgba(255,255,255,0.02) inset}
+    50%{box-shadow: 0 0 26px rgba(255,255,255,0.22), 0 0 60px rgba(255,255,255,0.04) inset}
+    100%{box-shadow: 0 0 6px rgba(255,255,255,0.06), 0 0 30px rgba(255,255,255,0.02) inset}
+  }
 
-.lead{font-size:18px;margin:8px 0}
-.note{font-size:13px;opacity:0.9;margin-top:8px}
+  /* البطاقة الرئيسية المحتوية على محتوى */
+  .card{
+    max-width:980px;
+    margin:0 auto;
+    background: linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));
+    border-radius:16px;
+    padding:22px;
+    box-shadow: 0 10px 30px rgba(2,10,30,0.6);
+    position:relative;
+    z-index:6;
+    overflow:hidden;
+  }
 
-/* testimonials */
-.testimonials{display:flex;gap:10px;overflow:auto;padding:8px 4px}
-.testi{min-width:220px;background:rgba(255,255,255,0.05);padding:12px;border-radius:10px}
-.testi h4{margin:0 0 6px 0;font-size:16px}
-.testi p{margin:0;font-size:14px;color:rgba(255,255,255,0.9)}
+  /* العروض */
+  .offers{display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:12px;margin-bottom:18px}
+  .offer{
+    background: linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));
+    padding:14px;border-radius:12px;border:1px solid rgba(255,255,255,0.04);
+    text-align:center;
+  }
+  .offer .price{font-size:20px;font-weight:800}
+  .offer .gain{font-size:14px;margin-top:6px;color:#eee}
 
-/* offers */
-.offers{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:12px;margin-top:12px}
-.offer{background:rgba(255,255,255,0.05);padding:14px;border-radius:12px;text-align:center}
-.offer .price{font-weight:800;font-size:20px;margin-bottom:6px}
-.offer .payout{font-size:16px;margin-bottom:10px}
-.offer button{background:var(--accent);border:0;padding:10px 14px;border-radius:10px;color:#fff;font-weight:700;cursor:pointer}
+  /* تحذير/تنبيه قانوني */
+  .notice{
+    background:rgba(255,255,255,0.04);
+    color:#fff;padding:10px;border-radius:10px;margin:12px 0;font-size:14px;border-left:4px solid #ffb74d;
+  }
 
-form{display:grid;grid-template-columns:1fr;gap:10px}
-label{font-size:14px;text-align:right}
-input,select{padding:12px;border-radius:10px;border:1px solid rgba(255,255,255,0.1);background:transparent;color:#fff}
-.submit{display:flex;gap:8px;align-items:center}
-.submit button{flex:1;background:#07a86a;border:0;padding:12px;border-radius:10px;font-weight:700;cursor:pointer}
+  /* استمارة */
+  form{display:flex;gap:10px;flex-wrap:wrap;align-items:center}
+  input[type="text"], input[type="tel"]{
+    flex:1 1 220px;padding:12px;border-radius:10px;border:1px solid rgba(255,255,255,0.06);
+    background:rgba(0,0,0,0.15);color:#fff;outline:none;
+  }
+  .buttons{display:flex;gap:10px}
+  button{
+    background:linear-gradient(90deg,#ff4b4b,#ff7b7b);border:0;padding:12px 18px;border-radius:10px;color:#fff;font-weight:700;cursor:pointer;
+    box-shadow: 0 6px 18px rgba(255,60,60,0.14);
+  }
+  button.secondary{background:transparent;border:1px solid rgba(255,255,255,0.06);box-shadow:none}
 
-footer{margin:20px;text-align:center;font-size:13px;opacity:0.9}
-@media (max-width:520px){.plinko-wrap{font-size:58px;padding:6px 12px}}
+  /* شريط شهادات العملاء (انزلاقي) */
+  .marquee{
+    margin-top:16px;overflow:hidden;border-radius:8px;background:rgba(0,0,0,0.15);padding:8px 12px;border:1px solid rgba(255,255,255,0.03)
+  }
+  .marquee .track{display:inline-block;white-space:nowrap;animation: scroll 18s linear infinite}
+  @keyframes scroll{
+    0%{transform:translateX(100%)}
+    100%{transform:translateX(-100%)}
+  }
+  .marquee .item{display:inline-block;padding:0 28px;font-weight:700}
 
-  </style>
+  /* استجابة */
+  @media(max-width:520px){
+    .plinko{font-size:48px;padding:8px 18px}
+    .offers{grid-template-columns:repeat(2,1fr)}
+  }
+</style>
 </head>
 <body>
-  <header>
-    <div class="plinko-wrap">PLINKO</div>
-    <div style="margin-top:12px;font-size:18px;opacity:0.92;font-weight:500">طبعًا — إحنا فرع من فروع الشركة الأصلية ومكسبك مضمون 100% وبشهادة عملائنا.</div>
-    <div class="balls" aria-hidden="true">
-      <div class="ball" style="left:8%;top:8%;width:120px;height:120px;opacity:0.85"></div>
-      <div class="ball" style="left:72%;top:6%;width:90px;height:90px;opacity:0.9"></div>
-      <div class="ball" style="left:46%;top:22%;width:140px;height:140px;opacity:0.75"></div>
-      <div class="ball" style="left:18%;top:34%;width:100px;height:100px;opacity:0.8"></div>
-    </div>
-  </header>  <main>
-    <section class="card">
-      <h3 style="margin:0 0 8px 0">شهادات عملائنا</h3>
-      <div class="testimonials">
-        <div class="testi"><h4>أحمد ع.</h4><p>استلمت الجائزة بنجاح، تعامل سريع ومحترف.</p></div>
-        <div class="testi"><h4>مريم س.</h4><p>خدمة ممتازة وخيارات دفع مرنة.</p></div>
-        <div class="testi"><h4>خالد م.</h4><p>الدعم كان متعاون جداً وتم التحويل في نفس اليوم.</p></div>
-        <div class="testi"><h4>سارة ك.</h4><p>تجربة ممتازة وأنصح الجميع بالتجربة.</p></div>
-        <div class="testi"><h4>محمد ش.</h4><p>مكسب حقيقي وخدمة موثوقة 100%.</p></div>
-      </div>
-    </section></h3>
-      <div class="testimonials">
-        <!-- سيتم تكرار 50 شهادة تلقائياً بالأسفل في السكريبت -->
-      </div>
-    </section><footer class="card">
-  <div style="font-weight:700;font-size:15px">تنبيه هام</div>
-  <div style="margin-top:6px;font-size:13px;opacity:0.9;line-height:1.7">
-    • جميع الاشتراكات تُعالَج عبر خدمة العملاء لضمان الدقة والسرعة.<br>
-    • سيتم التواصل معك مباشرة عبر الماسنجر لتأكيد البيانات وطريقة الدفع.<br>
-    • أي طلب بدون بيانات صحيحة لن يتم مراجعته.
-  </div>
-</footer>
+  <div class="page">
+    <div class="fog"></div>
 
-  </main>  <script>
-    // animate balls
-    document.querySelectorAll('.ball').forEach((b,i)=>{
-      b.animate([{transform:'translateY(0)'},{transform:'translateY(-14px)'},{transform:'translateY(0)'}],{duration:3000+i*500,iterations:Infinity});
+    <!-- كرات حمراء ضبابية -->
+    <div class="ball b1"></div>
+    <div class="ball b2"></div>
+    <div class="ball b3"></div>
+    <div class="ball b4"></div>
+    <div class="ball b5"></div>
+
+    <div class="hero">
+      <div class="plinko">PLINKO</div>
+    </div>
+
+    <div class="card" role="main" aria-labelledby="main-heading">
+      <h2 id="main-heading" style="margin:0 0 8px 0;text-align:center">مرحبًا بك في صفحة Plinko</h2>
+
+      <!-- تنبيه قانوني واضح -->
+      <p class="notice">
+        ملاحظة مهمة: المحتوى الموجود في هذه الصفحة **عرض توضيحي/ترويجي فقط** ولا يُعد وعدًا أو ضمانًا بتحقيق أرباح. لا نستخدم أي برامج غير قانونية أو طرق احتيالية. يرجى التعامل بحذر وعدم مشاركة معلومات حساسة دون التأكد.
+      </p>
+
+      <!-- العروض -->
+      <div class="offers" aria-hidden="false">
+        <div class="offer"><div class="price">200 ج</div><div class="gain">مثال ربح محتمل: 2,600 ج</div></div>
+        <div class="offer"><div class="price">300 ج</div><div class="gain">مثال ربح محتمل: 3,400 ج</div></div>
+        <div class="offer"><div class="price">500 ج</div><div class="gain">مثال ربح محتمل: 5,200 ج</div></div>
+        <div class="offer"><div class="price">800 ج</div><div class="gain">مثال ربح محتمل: 9,000 ج</div></div>
+        <div class="offer"><div class="price">1,000 ج</div><div class="gain">مثال ربح محتمل: 12,000 ج</div></div>
+        <div class="offer"><div class="price">2,000 ج</div><div class="gain">مثال ربح محتمل: 25,000 ج</div></div>
+      </div>
+
+      <!-- نموذج الاشتراك -->
+      <form id="signup" onsubmit="return handleSubmit(event)">
+        <input type="text" id="name" placeholder="الاسم الكامل" required />
+        <input type="tel" id="wallet" placeholder="رقم المحفظة (مثال: 01xxxxxxxx)" required />
+        <div class="buttons">
+          <button type="submit">طلب اشتراك</button>
+          <button type="button" class="secondary" onclick="copyInfo()">نسخ بيانات للّصق في الماسنجر</button>
+        </div>
+      </form>
+
+      <!-- شريط شهادات العملاء التجريبي -->
+      <div class="marquee" aria-hidden="false" title="شهادات المستخدمين">
+        <div class="track" id="track">
+          <span class="item">✅ 50 مستخدم جربوا الخدمة (تقييمات تجريبية)</span>
+          <span class="item">✅ تجربة سلسة وسياسة خصوصية واضحة</span>
+          <span class="item">✅ الدعم متاح للاستفسارات</span>
+          <span class="item">✅ لا نضمن أرباحاً، هذه أمثلة توضيحية فقط</span>
+          <!-- تتكرر لتستمر الحركة -->
+          <span class="item">✅ 50 مستخدم جربوا الخدمة (تقييمات تجريبية)</span>
+          <span class="item">✅ تجربة سلسة وسياسة خصوصية واضحة</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+<script>
+  // وظيفة إرسال: تمنع الادعاءات، تحفظ محليًا (مثال) وتفتح الماسنجر ليتواصل المستخدم بنفسه
+  function handleSubmit(e){
+    e.preventDefault();
+    const name = document.getElementById('name').value.trim();
+    const wallet = document.getElementById('wallet').value.trim();
+    if(!name || !wallet){ alert('من فضلك املأ الحقول المطلوبة'); return false; }
+
+    // حفظ مؤقت محلي (مثال فقط) - لا تنشر بيانات حساسة على مواقع عامة
+    const submission = {name, wallet, time: new Date().toISOString()};
+    // هنا نحتفظ مؤقتًا في localStorage كـ demo — في منتج حقيقي استخدم سيرفر آمن وHTTPS
+    let arr = JSON.parse(localStorage.getItem('plinko_signups') || '[]');
+    arr.push(submission);
+    localStorage.setItem('plinko_signups', JSON.stringify(arr));
+
+    // ننسخ رسالة جاهزة للمستخدم ونفتح صفحة الماسنجر العامة
+    const message = `مرحبًا، أنا ${name}، أريد طلب اشتراك — رقم المحفظة: ${wallet}`;
+    copyText(message).then(()=>{
+      // نفتح messenger العام لتكملة المحادثة — ضع رابط صفحتك بدل placeholder
+      const messengerUrl = 'https://m.me/'; // ضع رابط صفحتك هنا إن أردت (مثال: https://m.me/YourPage)
+      window.open(messengerUrl, '_blank');
+      alert('تم نسخ رسالة الاشتراك تلقائياً. افتح Messenger والصق الرسالة لإرسالها.');
     });
 
-    // auto-fill plan when clicking offer
-    document.querySelectorAll('.offer button').forEach(btn=>{
-      btn.addEventListener('click',()=>{
-        document.getElement
+    // إظهار تأكيد بصري
+    return false;
+  }
+
+  // نسخ للنّسخ في الحافظة
+  async function copyText(text){
+    if(navigator.clipboard && navigator.clipboard.writeText){
+      await navigator.clipboard.writeText(text);
+    }else{
+      // بديل قديم
+      const ta = document.createElement('textarea');
+      ta.value = text; document.body.appendChild(ta);
+      ta.select();
+      try{ document.execCommand('copy'); }catch(e){}
+      ta.remove();
+    }
+  }
+
+  // زر نسخة سريع: يأخذ الحقول أو نص عام
+  function copyInfo(){
+    const name = document.getElementById('name').value.trim() || 'الاسم';
+    const wallet = document.getElementById('wallet').value.trim() || 'رقم المحفظة';
+    const text = `مرحبًا، أنا ${name}، أريد طلب اشتراك — رقم المحفظة: ${wallet}`;
+    copyText(text).then(()=> alert('تم نسخ النص. افتح Messenger والصقه لإرساله.'));
+  }
+
+  // لتحسين الوصول: إيقاف الحركة لوضع توفير الطاقة (اختياري)
+  if (window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+    document.querySelectorAll('.plinko, .ball, .track').forEach(el=> el.style.animation = 'none');
+  }
+</script>
+</body>
+</html>
