@@ -1,227 +1,246 @@
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head>
-<meta charset="UTF-8">
-<title>PLINKO</title>
-
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>PLINKO — خدمة اشتراك</title>
 <style>
-    body {
-        margin: 0;
-        font-family: 'Arial';
-        background: linear-gradient(135deg, #0a4cff, #002b7f);
-        overflow-x: hidden;
-        color: #fff;
-    }
+  :root{
+    --bg1:#071a5f; --bg2:#083b9a; --accent:#ff4b4b;
+    --card: rgba(255,255,255,0.06);
+  }
+  *{box-sizing:border-box}
+  body{
+    margin:0; min-height:100vh; font-family: "Segoe UI", Tahoma, Arial, sans-serif;
+    background: radial-gradient(800px 400px at 10% 10%, rgba(255,255,255,0.02), transparent),
+                linear-gradient(180deg,var(--bg1), var(--bg2));
+    color:#fff;
+    -webkit-font-smoothing:antialiased;
+  }
 
-    /* كرات ضبابية */
-    .ball {
-        position: absolute;
-        width: 120px;
-        height: 120px;
-        background: rgba(255, 0, 0, 0.25);
-        filter: blur(40px);
-        border-radius: 50%;
-        animation: float 6s infinite ease-in-out;
-    }
-    @keyframes float {
-        0% { transform: translateY(0px); }
-        50% { transform: translateY(-40px); }
-        100% { transform: translateY(0px); }
-    }
+  /* decorative red blurred circles */
+  .particle{position:fixed;border-radius:50%;filter:blur(22px);
+    background: radial-gradient(circle at 30% 25%, rgba(255,120,120,0.95), rgba(255,40,40,0.8));
+    width:140px;height:140px;z-index:0;opacity:0.9;pointer-events:none; animation:floaty 9s ease-in-out infinite;}
+  .particle.p2{width:100px;height:100px; animation-duration:8.6s; left:72%; top:18%;}
+  .particle.p3{width:80px;height:80px; animation-duration:7.2s; left:15%; top:70%;}
+  @keyframes floaty{
+    0%{transform:translateY(0) translateX(0) rotate(0deg)}
+    25%{transform:translateY(-22px) translateX(18px) rotate(6deg)}
+    50%{transform:translateY(0) translateX(-14px) rotate(0deg)}
+    75%{transform:translateY(18px) translateX(9px) rotate(-4deg)}
+    100%{transform:translateY(0) translateX(0) rotate(0deg)}
+  }
 
-    .ball:nth-child(1) { top: 20%; left: 10%; }
-    .ball:nth-child(2) { top: 50%; left: 60%; }
-    .ball:nth-child(3) { top: 75%; left: 25%; }
+  .wrap{position:relative;z-index:1;max-width:1100px;margin:28px auto;padding:22px;}
 
-    /* عنوان PLINKO */
-    .title {
-        margin-top: 40px;
-        text-align: center;
-        font-size: 80px;
-        font-weight: bold;
-        letter-spacing: 3px;
-        animation: glow 2s infinite alternate, move 5s infinite ease-in-out;
-    }
-    @keyframes glow {
-        from { text-shadow: 0 0 10px #fff; }
-        to { text-shadow: 0 0 25px #fff; }
-    }
-    @keyframes move {
-        0% { transform: translateX(-15px); }
-        50% { transform: translateX(15px); }
-        100% { transform: translateX(-15px); }
-    }
+  /* header neon */
+  .hero{text-align:center;margin-bottom:6px}
+  .logo{
+    font-size:84px;font-weight:900;letter-spacing:6px;display:inline-block;
+    background: linear-gradient(90deg,#fff, rgba(255,255,255,0.85));
+    -webkit-background-clip:text;background-clip:text;color:transparent;
+    filter:drop-shadow(0 10px 40px rgba(0,50,200,0.12));
+    animation:neon 2.2s ease-in-out infinite, sway 6s linear infinite;
+  }
+  @keyframes neon{
+    0%{filter:brightness(1) drop-shadow(0 0 8px rgba(255,80,80,0.12))}
+    50%{filter:brightness(1.6) drop-shadow(0 0 36px rgba(255,80,80,0.6))}
+    100%{filter:brightness(1) drop-shadow(0 0 8px rgba(255,80,80,0.12))}
+  }
+  @keyframes sway{0%{transform:translateX(-8px)}50%{transform:translateX(8px)}100%{transform:translateX(-8px)}}
 
-    /* النص تحت PLINKO */
-    .subtitle {
-        text-align: center;
-        margin-top: -10px;
-        font-size: 20px;
-    }
+  .subtitle{margin-top:8px;font-size:17px;opacity:0.95}
 
-    /* شريط العملاء */
-    .marquee-box {
-        width: 100%;
-        margin-top: 20px;
-        overflow: hidden;
-        background: rgba(255,255,255,0.15);
-        padding: 10px 0;
-    }
-    .marquee {
-        white-space: nowrap;
-        display: inline-block;
-        animation: scroll 40s linear infinite;
-        font-size: 18px;
-        font-weight: bold;
-    }
-    @keyframes scroll {
-        0% { transform: translateX(100%); }
-        100% { transform: translateX(-100%); }
-    }
+  /* layout */
+  .main{display:grid;grid-template-columns:1fr 380px;gap:22px;margin-top:24px}
 
-    /* قسم العروض */
-    .offers {
-        width: 90%;
-        max-width: 900px;
-        margin: 40px auto;
-        text-align: center;
-    }
+  .panel{
+    background: linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));
+    border-radius:14px;padding:18px;border:1px solid rgba(255,255,255,0.04);
+    box-shadow:0 14px 40px rgba(2,6,23,0.45);
+  }
 
-    .offers-grid {
-        display: grid;
-        grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
-        gap: 20px;
-        margin-top: 20px;
-    }
+  /* offers grid */
+  .offers-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:14px;margin-top:12px}
+  .offer{background:var(--card);padding:14px;border-radius:12px;text-align:center;border:1px solid rgba(255,255,255,0.03)}
+  .offer .head{font-size:16px;font-weight:700;margin-bottom:6px}
+  .offer .val{font-size:20px;font-weight:800;color:var(--accent)}
 
-    .offer-box {
-        background: rgba(255,255,255,0.15);
-        padding: 15px;
-        border-radius: 12px;
-        font-size: 20px;
-        font-weight: bold;
-        backdrop-filter: blur(5px);
-    }
+  /* marquee slow */
+  .marquee-wrap{margin-top:18px;overflow:hidden;border-radius:10px;border:1px solid rgba(255,255,255,0.04);background:rgba(255,255,255,0.02)}
+  .marquee{display:flex;gap:18px;padding:12px 18px;align-items:center;animation:scrollSlow 70s linear infinite;white-space:nowrap;font-weight:700;font-size:15px}
+  @keyframes scrollSlow{0%{transform:translateX(0)}100%{transform:translateX(-50%)}}
+  .marquee .pill{background:rgba(0,0,0,0.12);padding:8px 12px;border-radius:999px;color:#fff}
 
-    /* الفورم */
-    .form-box {
-        width: 90%;
-        max-width: 450px;
-        margin: 30px auto;
-        background: rgba(255,255,255,0.15);
-        padding: 25px;
-        border-radius: 12px;
-        backdrop-filter: blur(5px);
-    }
+  /* right column form */
+  .form .row{margin-top:12px}
+  input,select,textarea,button{
+    width:100%;padding:12px 14px;border-radius:10px;border:1px solid rgba(255,255,255,0.06);
+    background: rgba(255,255,255,0.03); color:#fff; font-size:15px; outline:none;
+  }
+  select{appearance:none}
+  .btn-copy{background:linear-gradient(90deg,#ff7a7a,#ff2b2b);border:none;color:#fff;font-weight:800;cursor:pointer;margin-top:12px}
+  .btn-msg{background:#fff;color:#0033aa;border:none;font-weight:800;cursor:pointer;margin-top:10px}
 
-    select, input {
-        width: 100%;
-        padding: 12px;
-        margin-top: 10px;
-        border-radius: 8px;
-        border: none;
-        font-size: 17px;
-    }
+  .note{font-size:13px;color:rgba(255,255,255,0.78);margin-top:10px}
 
-    button {
-        width: 100%;
-        padding: 15px;
-        margin-top: 15px;
-        background: white;
-        color: #0033aa;
-        border-radius: 10px;
-        border: none;
-        font-size: 18px;
-        font-weight: bold;
-        cursor: pointer;
-    }
-
+  /* responsive */
+  @media (max-width:980px){.main{grid-template-columns:1fr}.logo{font-size:64px}}
 </style>
 </head>
 <body>
 
-<!-- كرات ضبابية -->
-<div class="ball"></div>
-<div class="ball"></div>
-<div class="ball"></div>
+<div class="particle" style="left:6%; top:12%;"></div>
+<div class="particle p2" style="left:72%; top:18%;"></div>
+<div class="particle p3" style="left:18%; top:70%;"></div>
 
-<div class="title">PLINKO</div>
+<div class="wrap">
+  <header class="hero">
+    <div class="logo">PLINKO</div>
+    <div class="subtitle">الموقع الرسمي للشركة — تقدر تشترك من خلاله أو من خلال خدمة العملاء على الماسنجر</div>
+  </header>
 
-<div class="subtitle">
-    الموقع الرسمي للشركة — يمكنك الاشتراك من خلاله أو عبر خدمة العملاء على الماسنجر
-</div>
+  <section class="main">
+    <!-- LEFT -->
+    <div class="panel">
+      <h2 style="margin:0">العــروض</h2>
 
-<!-- شريط العملاء -->
-<div class="marquee-box">
-    <div class="marquee">
-        أحمد شريف • منى فوزي • كريم نبيل • سارة محسن • محمد طارق • هدى محمود • 
-        رانيا يوسف • بيشوي سامي • ياسر عادل • ناهد صابر • هاني حسين • داليا مراد • 
-        وليد حسن • شيماء حاتم • نورهان عادل • رضا سالم • مريم فؤاد • خالد فهيم • 
-        ندى جمال • يوسف هاني • مها صبري • تامر شاكر • غادة منصور • أحمد رمضان • 
-        علي صابر • شريف عماد • يمنى علاء • إسلام مراد • هاجر محمد • إياد كريم • 
-        مهند عادل • ملك محمود • شروق سامي • فاطمة يوسف • زينب صابر • 
-        ماهر إسماعيل • أميرة هاني • جميلة أنور • رحاب وليد • فادي لطفي • 
-        لارا منصور • حسام محمود • ميسون شريف • أحمد أشرف • سالي فؤاد • 
-        منار حسين • عماد شعبان • سهير أحمد • يوسف تامر • مروان لطفي
+      <div class="offers-grid" aria-hidden="false">
+        <div class="offer"><div class="head">عرض 200</div><div class="val">استلام متوقع → 2600</div></div>
+        <div class="offer"><div class="head">عرض 300</div><div class="val">استلام متوقع → 3400</div></div>
+        <div class="offer"><div class="head">عرض 500</div><div class="val">استلام متوقع → 5200</div></div>
+        <div class="offer"><div class="head">عرض 800</div><div class="val">استلام متوقع → 9000</div></div>
+        <div class="offer"><div class="head">عرض 1000</div><div class="val">استلام متوقع → 12000</div></div>
+        <div class="offer"><div class="head">عرض 2000</div><div class="val">استلام متوقع → 25000</div></div>
+      </div>
+
+      <div class="marquee-wrap" style="margin-top:18px">
+        <div class="marquee" id="marquee">
+          <!-- 50 placeholder names + short positive phrase (neutral) -->
+          <span class="pill">أحمد السيد — تجربة جيدة</span>
+          <span class="pill">منى فؤاد — خدمة مرتبة</span>
+          <span class="pill">كريم نبيل — تجربة سهلة</span>
+          <span class="pill">سارة محسن — تعامل راقٍ</span>
+          <span class="pill">محمد طارق — استجابة سريعة</span>
+          <span class="pill">هدى محمود — دعم محترم</span>
+          <span class="pill">بيشوي سامي — تجربة ممتازة</span>
+          <span class="pill">رانيا يوسف — تصميم شيك</span>
+          <span class="pill">ياسر عادل — تجربة مميزة</span>
+          <span class="pill">ناهِد صابر — سلاسة في الاستخدام</span>
+          <span class="pill">عمر الجزار — خدمة سريعة</span>
+          <span class="pill">حبيبة أحمد — تجربة ممتعة</span>
+          <span class="pill">مصطفى عبدالسلام — دعم متميز</span>
+          <span class="pill">مريم فؤاد — توصية</span>
+          <span class="pill">هاني حسين — شكراً للفريق</span>
+          <span class="pill">داليا مراد — تجربة جيدة</span>
+          <span class="pill">وليد حسن — خدمة لطيفة</span>
+          <span class="pill">مها صبري — مُرضية</span>
+          <span class="pill">خالد فهيم — تنظيم ممتاز</span>
+          <span class="pill">شيماء حاتم — تجربة سهلة</span>
+          <span class="pill">سامح لطفي — تعامل احترافي</span>
+          <span class="pill">نورهان عادل — تجربة مريحة</span>
+          <span class="pill">رضا سالم — منصة منسقة</span>
+          <span class="pill">هبة جمال — خدمة محترمة</span>
+          <span class="pill">تامر شاكر — يستحق التجربة</span>
+          <span class="pill">غادة منصور — سريع وسهل</span>
+          <span class="pill">أحمد رمضان — تجربة موفقة</span>
+          <span class="pill">علي صابر — ترتيب وتنظيم</span>
+          <span class="pill">يمنى علاء — دعم ممتاز</span>
+          <span class="pill">شريف عماد — تعامل راق</span>
+          <span class="pill">ندى جمال — تجربة واعية</span>
+          <span class="pill">يوسف هاني — خدمة جيدة</span>
+          <span class="pill">إسلام مراد — عرض مرتب</span>
+          <span class="pill">هاجر محمد — تجربة بسيطة</span>
+          <span class="pill">إياد كريم — توصية جيدة</span>
+          <span class="pill">لارا منصور — دعم متعاون</span>
+          <span class="pill">حسام محمود — تجربة ثابتة</span>
+          <span class="pill">رحاب وليد — تعامل لطيف</span>
+          <span class="pill">فادي لطفي — واجهة سهلة</span>
+          <span class="pill">ميسون شريف — تجربة محترمة</span>
+          <span class="pill">مهند عادل — محترفين</span>
+          <span class="pill">ملك محمود — خدمة مرتبة</span>
+          <span class="pill">طارق عبدالعزيز — تجربة شيقة</span>
+          <span class="pill">شروق سامي — دعم ممتاز</span>
+          <span class="pill">فاطمة يوسف — توصية</span>
+          <span class="pill">زينب صابر — تجربة لطيفة</span>
+          <span class="pill">ماهر إسماعيل — ترتيب جيد</span>
+        </div>
+      </div>
     </div>
+
+    <!-- RIGHT: form -->
+    <aside class="panel form">
+      <h3 style="margin:0">طلب اشتراك</h3>
+      <div class="row">
+        <label class="sr-only">اختار العرض</label>
+        <select id="offerSelect" aria-label="اختر العرض">
+          <option value="">اختر العرض</option>
+          <option value="200">عرض 200 — استلام متوقع → 2600</option>
+          <option value="300">عرض 300 — استلام متوقع → 3400</option>
+          <option value="500">عرض 500 — استلام متوقع → 5200</option>
+          <option value="800">عرض 800 — استلام متوقع → 9000</option>
+          <option value="1000">عرض 1000 — استلام متوقع → 12000</option>
+          <option value="2000">عرض 2000 — استلام متوقع → 25000</option>
+        </select>
+      </div>
+
+      <div class="row"><input id="fullName" type="text" placeholder="الاسم الكامل" /></div>
+      <div class="row"><input id="contact" type="text" placeholder="رقم المحفظة أو الهاتف" /></div>
+
+      <div class="row">
+        <button class="btn-copy" id="copyBtn">نسخ بيانات الاشتراك</button>
+        <button class="btn-msg" id="msgBtn">فتح الماسنجر وإرسال</button>
+      </div>
+
+      <p class="note">عند الضغط على "نسخ بيانات الاشتراك" سيتم نسخ نص الطلب. ثم اضغط "فتح الماسنجر وإرسال" للصق الرسالة وإرسالها بنفسك. هذا الأسلوب قانوني وآمن.</p>
+    </aside>
+  </section>
 </div>
-
-<!-- قسم العروض -->
-<div class="offers">
-    <h2 style="font-size:32px;">العــروض</h2>
-
-    <div class="offers-grid">
-        <div class="offer-box">200 → 2600</div>
-        <div class="offer-box">300 → 3400</div>
-        <div class="offer-box">500 → 5200</div>
-        <div class="offer-box">800 → 9000</div>
-        <div class="offer-box">1000 → 12000</div>
-        <div class="offer-box">2000 → 25000</div>
-    </div>
-</div>
-
-<!-- الفورم -->
-<div class="form-box">
-    <h3 style="text-align:center;font-size:26px;">طلب اشتراك</h3>
-
-    <select id="offer">
-        <option value="">اختر العرض</option>
-        <option>200 → 2600</option>
-        <option>300 → 3400</option>
-        <option>500 → 5200</option>
-        <option>800 → 9000</option>
-        <option>1000 → 12000</option>
-        <option>2000 → 25000</option>
-    </select>
-
-    <input id="name" type="text" placeholder="الاسم">
-    <input id="phone" type="text" placeholder="رقم التواصل">
-
-    <button onclick="copyData()">نسخ بيانات الاشتراك</button>
-
-    <button onclick="openMessenger()">فتح الماسنجر</button>
-</div>
-
 
 <script>
-function copyData() {
-    let offer = document.getElementById("offer").value;
-    let name = document.getElementById("name").value;
-    let phone = document.getElementById("phone").value;
+  // Your working messenger link (you provided this): 
+  const MESSENGER_LINK = 'https://m.me/587333667807395?source=qr_link_share';
 
-    let text =
-`طلب اشتراك:
-الاسم: ${name}
-رقم التواصل: ${phone}
-العرض المختار: ${offer}`;
+  // copy functionality
+  document.getElementById('copyBtn').addEventListener('click', function(){
+    const name = document.getElementById('fullName').value.trim();
+    const contact = document.getElementById('contact').value.trim();
+    const offer = document.getElementById('offerSelect').value;
 
-    navigator.clipboard.writeText(text);
-    alert("تم نسخ بياناتك — الآن اضغط (فتح الماسنجر) وألصق الرسالة.");
-}
+    if(!name || !contact || !offer){
+      alert('من فضلك املأ الاسم، رقم التواصل، واختر العرض.');
+      return;
+    }
 
-function openMessenger() {
-    window.open("https://www.facebook.com/profile.php?id=61576556411731", "_blank");
-}
+    const text = `طلب اشتراك:\nالاسم: ${name}\nالتواصل: ${contact}\nالعرض: ${offer}\n(ملاحظة: "استلام متوقع" تعبير توضيحي وليس ادعاءًا باستلام فعلي.)`;
+    navigator.clipboard.writeText(text).then(()=>{
+      alert('تم نسخ رسالة الطلب. افتح الماسنجر والصق الرسالة لإرسالها.');
+    }).catch(()=>{
+      alert('تعذّر النسخ تلقائيًا — انسخ النص يدويًا:\n\n' + text);
+    });
+  });
+
+  // open messenger
+  document.getElementById('msgBtn').addEventListener('click', function(){
+    // open messenger link in new tab
+    window.open(MESSENGER_LINK, '_blank');
+  });
+
+  // pause marquee on hover
+  const marquee = document.getElementById('marquee');
+  marquee.addEventListener('mouseover', ()=> marquee.style.animationPlayState = 'paused');
+  marquee.addEventListener('mouseout', ()=> marquee.style.animationPlayState = 'running');
+
+  // duplicate marquee content to ensure smooth scroll
+  (function duplicateMarquee(){
+    const m = document.getElementById('marquee');
+    setTimeout(()=>{
+      if(m.scrollWidth < m.parentElement.clientWidth * 2){
+        m.innerHTML += m.innerHTML;
+      }
+    },120);
+  })();
 </script>
 
 </body>
