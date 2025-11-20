@@ -2,182 +2,212 @@
 <html lang="ar" dir="rtl">
 <head>
 <meta charset="UTF-8">
-<title>Plinko</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>PLINKO</title>
+
 <style>
 body {
-    margin: 0;
-    font-family: sans-serif;
-    background: radial-gradient(circle, #0055ff, #003399);
-    color: #fff;
-    overflow-x: hidden;
+  margin: 0;
+  font-family: sans-serif;
+  background: #003f7d;
+  color: #fff;
+  overflow-x: hidden;
 }
 
 /* كرات ضبابية */
-.balls {
-    position: fixed;
-    width: 100%;
-    height: 100%;
-    top: 0; left: 0;
-    overflow: hidden;
-    z-index: -1;
-}
-
 .ball {
-    position: absolute;
-    width: 80px;
-    height: 80px;
-    background: red;
-    border-radius: 50%;
-    filter: blur(12px);
-    opacity: 0.35;
-    animation: float 6s infinite ease-in-out;
+  position: absolute;
+  width: 80px;
+  height: 80px;
+  background: rgba(255,0,0,0.4);
+  border-radius: 50%;
+  filter: blur(8px);
+  animation: float 6s infinite ease-in-out;
 }
-
 @keyframes float {
-    0% { transform: translateY(0); }
-    50% { transform: translateY(-40px); }
-    100% { transform: translateY(0); }
+  0% { transform: translateY(0px); }
+  50% { transform: translateY(-30px); }
+  100% { transform: translateY(0px); }
 }
 
-/* عنوان PLINKO */
+/* كلمة PLINKO */
 .title {
-    text-align: center;
-    font-size: 55px;
-    font-weight: bold;
-    margin-top: 30px;
-    color: #fff;
-    text-shadow: 0 0 15px #fff, 0 0 25px #00aaff;
-    animation: glow 2s infinite alternate;
+  text-align: center;
+  font-size: 55px;
+  font-weight: 900;
+  margin-top: 40px;
+  color: #fff;
+  animation: glow 2s infinite alternate ease-in-out;
 }
 @keyframes glow {
-    from { text-shadow: 0 0 10px #fff; }
-    to   { text-shadow: 0 0 25px #00aaff; }
+  from { text-shadow: 0 0 10px #fff; }
+  to   { text-shadow: 0 0 25px #00c8ff; }
 }
 
-/* نص تحت العنوان */
+/* النص تحت العنوان */
 .sub-text {
-    text-align: center;
-    margin-top: -10px;
-    font-size: 16px;
-    opacity: 0.9;
+  text-align: center;
+  font-size: 18px;
+  margin-top: -10px;
+  color: #d8ecff;
 }
 
 /* العروض */
 .offers {
-    display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    gap: 12px;
-    margin: 25px auto;
-    width: 92%;
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 15px;
+  width: 90%;
+  margin: 35px auto;
 }
 
 .offer-box {
-    background: rgba(255,255,255,0.15);
-    padding: 18px;
-    border-radius: 14px;
-    text-align: center;
-    backdrop-filter: blur(6px);
-    font-size: 20px;
-    font-weight: bold;
+  background: rgba(255,255,255,0.09);
+  padding: 15px;
+  text-align: center;
+  border-radius: 14px;
+  backdrop-filter: blur(6px);
+  border: 1px solid rgba(255,255,255,0.08);
+  transition: 0.3s;
+}
+.offer-box:hover {
+  transform: scale(1.05);
 }
 
-.offer-box span {
-    font-size: 14px;
-    opacity: 0.85;
+/* نموذج طلب اشتراك */
+.form-section {
+  width: 90%;
+  margin: 20px auto;
+  background: rgba(255,255,255,0.07);
+  padding: 18px;
+  border-radius: 14px;
+  backdrop-filter: blur(6px);
 }
 
-/* زر الاشتراك */
-.join-btn {
-    display: block;
-    width: 85%;
-    margin: 25px auto;
-    background: #00aaff;
-    color: #fff;
-    padding: 14px;
-    font-size: 20px;
-    text-align: center;
-    border-radius: 14px;
-    text-decoration: none;
-    font-weight: bold;
-    box-shadow: 0 0 10px #00aaff;
+.form-section input,
+.form-section select {
+  width: 100%;
+  padding: 12px;
+  margin-top: 8px;
+  border-radius: 10px;
+  border: none;
+  background: rgba(255,255,255,0.15);
+  color: #fff;
+}
+
+.send-btn {
+  width: 100%;
+  padding: 12px;
+  margin-top: 12px;
+  background: #00aaff;
+  border: none;
+  border-radius: 10px;
+  font-weight: bold;
+  font-size: 17px;
+  color: #fff;
+  cursor: pointer;
 }
 
 /* التعليقات */
-.reviews-section {
-    width: 92%;
-    margin: 35px auto;
+.reviews {
+  width: 90%;
+  margin: 35px auto;
 }
 
 .review-box {
-    background: rgba(255,255,255,0.15);
-    margin: 10px 0;
-    padding: 12px;
-    border-radius: 10px;
-    line-height: 1.5;
-    font-size: 15px;
-    backdrop-filter: blur(4px);
+  background: rgba(255,255,255,0.06);
+  padding: 12px;
+  border-radius: 10px;
+  margin-bottom: 10px;
+  border: 1px solid rgba(255,255,255,0.07);
 }
+
 </style>
 </head>
 <body>
 
-<div class="balls">
-    <div class="ball" style="top:20%; left:10%"></div>
-    <div class="ball" style="top:60%; left:70%"></div>
-    <div class="ball" style="top:40%; left:40%"></div>
-</div>
+<!-- كرات ضبابية -->
+<div class="ball" style="top:20%; left:10%;"></div>
+<div class="ball" style="top:60%; left:70%;"></div>
+<div class="ball" style="top:40%; left:30%;"></div>
 
-<div class="title">PLINKO</div>
-<div class="sub-text">الموقع الرسمي – تقدر تشترك من خلاله بكل أمان وسهولة</div>
+<!-- العنوان -->
+<h1 class="title">PLINKO</h1>
+<p class="sub-text">الموقع الرسمي — تقدر تشترك من خلاله بكل أمان وسهولة</p>
 
-<!-- العروض -->
+<!-- العروض صفين -->
 <div class="offers">
-    <div class="offer-box">عرض 200ج <br><span>قيمة تجريبية</span></div>
-    <div class="offer-box">عرض 300ج <br><span>قيمة تجريبية</span></div>
-    <div class="offer-box">عرض 500ج <br><span>قيمة تجريبية</span></div>
-    <div class="offer-box">عرض 800ج <br><span>قيمة تجريبية</span></div>
-    <div class="offer-box">عرض 1000ج <br><span>قيمة تجريبية</span></div>
-    <div class="offer-box">عرض 2000ج <br><span>قيمة تجريبية</span></div>
+  <div class="offer-box">عرض 200 ج</div>
+  <div class="offer-box">عرض 300 ج</div>
+  <div class="offer-box">عرض 500 ج</div>
+  <div class="offer-box">عرض 800 ج</div>
+  <div class="offer-box">عرض 1000 ج</div>
+  <div class="offer-box">عرض 2000 ج</div>
 </div>
 
-<!-- زر الاشتراك -->
-<a class="join-btn" href="https://m.me/587333667807395?source=qr_link_share">طلب الاشتراك</a>
+<!-- نموذج طلب اشتراك -->
+<div class="form-section">
+  <h3 style="text-align:center;margin-bottom:10px;">طلب اشتراك</h3>
+
+  <label>الاسم</label>
+  <input type="text" id="name" placeholder="اكتب اسمك">
+
+  <label>رقم الهاتف</label>
+  <input type="tel" id="phone" placeholder="01xxxxxxx">
+
+  <label>اختار العرض</label>
+  <select id="plan">
+    <option>عرض 200 ج</option>
+    <option>عرض 300 ج</option>
+    <option>عرض 500 ج</option>
+    <option>عرض 800 ج</option>
+    <option>عرض 1000 ج</option>
+    <option>عرض 2000 ج</option>
+  </select>
+
+  <button class="send-btn" onclick="sendMsg()">إرسال عبر Messenger</button>
+</div>
 
 <!-- التعليقات -->
-<div class="reviews-section">
-    <h3>آراء المستخدمين</h3>
-    <div class="reviews"></div>
+<div class="reviews">
+  <h3 style="margin-bottom:10px;">آراء العملاء</h3>
+
+  <div id="reviewsContainer"></div>
 </div>
 
 <script>
-// تعليقات شكلية فقط
 const names = [
-    "محمد حسن","أحمد سمير","سارة أحمد","منة جمال","خالد أشرف","مريم حسن",
-    "شريف علي","حسن يوسف","ياسمين محمد","هدى مصطفى","بلال يوسف","زياد وليد",
-    "آية طارق","نوران محمود","إيمان فوزي","مي خالد","رحمة سمير"
+  "أحمد حسن","محمود أشرف","محمد صبري","يوسف إبراهيم","سيف علي",
+  "خالد محمود","مصطفى حسين","عمرو رضا","مروان أحمد","عمر حاتم",
+  "ياسمين وليد","آية خالد","منة أشرف","سارة سامي","رحمه محمد"
 ];
 
-const texts = [
-    "التعامل محترم جداً.",
-    "خدمة ممتازة ومريحة.",
-    "سهل جداً ومباشر.",
-    "شكراً على الاهتمام.",
-    "تجربة لطيفة.",
-    "سريعة وواضحة.",
-    "أنصح بالتجربة.",
-    "تعامل محترم."
-];
+// توليد 30 تعليق شكل عام
+let reviewsHTML = "";
+for(let i=0;i<30;i++){
+  const name = names[Math.floor(Math.random()*names.length)];
+  reviewsHTML += `
+    <div class="review-box">
+      <strong>${name}</strong><br>
+      تعامل محترم وسهل جدًا. تجربة ممتازة.
+    </div>
+  `;
+}
+document.getElementById("reviewsContainer").innerHTML = reviewsHTML;
 
-// توليد 50 تعليق
-for (let i = 0; i < 50; i++) {
-    const box = document.createElement("div");
-    box.className = "review-box";
+// إرسال ماسنجر
+function sendMsg(){
+  const name = document.getElementById("name").value;
+  const phone = document.getElementById("phone").value;
+  const plan = document.getElementById("plan").value;
 
-    const n = names[Math.floor(Math.random()*names.length)];
-    const t = texts[Math.floor(Math.random()*texts.length)];
+  if(!phone){
+    alert("من فضلك أدخل رقم الهاتف");
+    return;
+  }
 
-    box.innerHTML = `<strong>${n}</strong><br>${t}`;
-    document.querySelector(".reviews").appendChild(box);
+  const msg = `طلب اشتراك%0Aالاسم: ${name}%0Aالهاتف: ${phone}%0Aالعرض: ${plan}`;
+  window.open("https://m.me/587333667807395?ref=" + msg, "_blank");
 }
 </script>
 
