@@ -7,109 +7,42 @@
     :root{--blue1:#062a6b;--blue2:#0a3d91;--accent:#ff3b3b}
     *{box-sizing:border-box}
     body{margin:0;font-family:system-ui,-apple-system,Segoe UI,Roboto,'Helvetica Neue',Arial; background: radial-gradient(ellipse at 10% 10%, rgba(10,61,145,0.12), transparent 20%), linear-gradient(180deg,var(--blue1),var(--blue2)); color:#fff;direction:rtl}
-    header{padding:36px 20px;text-align:center;position:relative;overflow:hidden}/* PLINKO
+    header{padding:36px 20px;text-align:center;position:relative;overflow:hidden}/* PLINKO animated title */
+.plinko-wrap{font-weight:900;letter-spacing:6px;font-size:92px;color:#fff;text-shadow:0 0 18px rgba(255,255,255,0.9);display:inline-block;padding:8px 18px;border-radius:16px;background:rgba(0,0,0,0.25);backdrop-filter:blur(6px)}
+@keyframes floaty{0%{transform:translateY(0)}50%{transform:translateY(-14px)}100%{transform:translateY(0)}}
+.plinko-wrap{animation:floaty 3.6s ease-in-out infinite}
 
-<!-- نص تحت كلمة بلاينكو --><div style="color:white;text-align:center;margin-top:10px;font-size:17px;opacity:0.9;">
-طبعًا عشان احنا فرع من فروع الشركة الأصلية فـ مكسبك مضمون 100% وبشهادة عملاءنا
-</div><!-- خانة طلب الاشتراك --><div style="background:rgba(0,0,0,0.45);padding:20px;margin:20px;border-radius:20px;color:white;text-align:center;">
-  <div style="font-size:20px;font-weight:700;margin-bottom:10px;">تقديم طلب اشتراك</div>
-  <form>
-    <input type="text" placeholder="الاسم" style="width:100%;padding:12px;border-radius:12px;border:none;margin-bottom:10px;">
-    <input type="text" placeholder="رقم كاش للاستلام والتحويل" style="width:100%;padding:12px;border-radius:12px;border:none;margin-bottom:15px;">
-    <a href="https://m.me/61576556411731" style="display:block;background:#0284c7;padding:14px;border-radius:15px;color:white;font-size:17px;font-weight:700;text-decoration:none;">إرسال الطلب</a>
-  </form>
-</div><!-- شهادات العملاء (50 عميل) --><div style="color:white;margin:20px;">
-  <div style="font-size:20px;font-weight:700;text-align:center;margin-bottom:10px;">شهادات عملائنا</div>
-  <div style="display:flex;flex-direction:column;gap:6px;font-size:14px;opacity:0.95;">
-    <div>• أحمد: تم استلام المكسب بنجاح ✔️</div>
-    <div>• مصطفى: تمام وصلتني الأرباح ✔️</div>
-    <div>• حسن: وصلت 3400ج بشكركم ✔️</div>
-    <div>• كريم: تم الاستلام فورًا ✔️</div>
-    <div>• مازن: شغل محترم ✔️</div>
-    <!-- تكرار 45 شهادة إضافية -->
-    <div>• عميل رقم 6: تم الاستلام ✔️</div>
-    <div>• عميل رقم 7: تم الاستلام ✔️</div>
-    <div>• عميل رقم 8: تم الاستلام ✔️</div>
-    <div>• عميل رقم 9: تم الاستلام ✔️</div>
-    <div>• عميل رقم 10: تم الاستلام ✔️</div>
-    <div>• عميل رقم 11: تم الاستلام ✔️</div>
-    <div>• عميل رقم 12: تم الاستلام ✔️</div>
-    <div>• عميل رقم 13: تم الاستلام ✔️</div>
-    <div>• عميل رقم 14: تم الاستلام ✔️</div>
-    <div>• عميل رقم 15: تم الاستلام ✔️</div>
-    <div>• عميل رقم 16: تم الاستلام ✔️</div>
-    <div>• عميل رقم 17: تم الاستلام ✔️</div>
-    <div>• عميل رقم 18: تم الاستلام ✔️</div>
-    <div>• عميل رقم 19: تم الاستلام ✔️</div>
-    <div>• عميل رقم 20: تم الاستلام ✔️</div>
-    <div>• عميل رقم 21: تم الاستلام ✔️</div>
-    <div>• عميل رقم 22: تم الاستلام ✔️</div>
-    <div>• عميل رقم 23: تم الاستلام ✔️</div>
-    <div>• عميل رقم 24: تم الاستلام ✔️</div>
-    <div>• عميل رقم 25: تم الاستلام ✔️</div>
-    <div>• عميل رقم 26: تم الاستلام ✔️</div>
-    <div>• عميل رقم 27: تم الاستلام ✔️</div>
-    <div>• عميل رقم 28: تم الاستلام ✔️</div>
-    <div>• عميل رقم 29: تم الاستلام ✔️</div>
-    <div>• عميل رقم 30: تم الاستلام ✔️</div>
-    <div>• عميل رقم 31: تم الاستلام ✔️</div>
-    <div>• عميل رقم 32: تم الاستلام ✔️</div>
-    <div>• عميل رقم 33: تم الاستلام ✔️</div>
-    <div>• عميل رقم 34: تم الاستلام ✔️</div>
-    <div>• عميل رقم 35: تم الاستلام ✔️</div>
-    <div>• عميل رقم 36: تم الاستلام ✔️</div>
-    <div>• عميل رقم 37: تم الاستلام ✔️</div>
-    <div>• عميل رقم 38: تم الاستلام ✔️</div>
-    <div>• عميل رقم 39: تم الاستلام ✔️</div>
-    <div>• عميل رقم 40: تم الاستلام ✔️</div>
-    <div>• عميل رقم 41: تم الاستلام ✔️</div>
-    <div>• عميل رقم 42: تم الاستلام ✔️</div>
-    <div>• عميل رقم 43: تم الاستلام ✔️</div>
-    <div>• عميل رقم 44: تم الاستلام ✔️</div>
-    <div>• عميل رقم 45: تم الاستلام ✔️</div>
-    <div>• عميل رقم 46: تم الاستلام ✔️</div>
-    <div>• عميل رقم 47: تم الاستلام ✔️</div>
-    <div>• عميل رقم 48: تم الاستلام ✔️</div>
-    <div>• عميل رقم 49: تم الاستلام ✔️</div>
-    <div>• عميل رقم 50: تم الاستلام ✔️</div>
-  </div>
-</div> animated title */
-    .plinko-wrap{$1 color:#fff;font-size:90px;}
-    @keyframes floaty{0%{transform:translateY(0)}50%{transform:translateY(-14px)}100%{transform:translateY(0)}}
-    .plinko-wrap{animation:floaty 3.6s ease-in-out infinite}/* misty red balls */
+/* misty red balls */
 .balls{position:absolute;inset:0;pointer-events:none}
 .ball{position:absolute;width:80px;height:80px;border-radius:50%;background:radial-gradient(circle at 30% 30%, rgba(255,100,100,0.95), rgba(255,10,10,0.7));filter:blur(6px) saturate(120%);opacity:0.9}
 
 main{max-width:980px;margin:26px auto;padding:18px}
-.card{background:linear-gradient(180deg, rgba(0,0,0,0.35), rgba(0,0,0,0.18));border-radius:14px;padding:18px;margin-bottom:18px;box-shadow:0 6px 20px rgba(0,0,0,0.36)}
+.card{background:rgba(0,0,0,0.35);border-radius:14px;padding:18px;margin-bottom:18px;box-shadow:0 6px 20px rgba(0,0,0,0.36)}
 
 .lead{font-size:18px;margin:8px 0}
 .note{font-size:13px;opacity:0.9;margin-top:8px}
 
 /* testimonials */
 .testimonials{display:flex;gap:10px;overflow:auto;padding:8px 4px}
-.testi{min-width:220px;background:rgba(255,255,255,0.03);padding:12px;border-radius:10px}
+.testi{min-width:220px;background:rgba(255,255,255,0.05);padding:12px;border-radius:10px}
 .testi h4{margin:0 0 6px 0;font-size:16px}
 .testi p{margin:0;font-size:14px;color:rgba(255,255,255,0.9)}
 
 /* offers */
 .offers{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:12px;margin-top:12px}
-.offer{background:linear-gradient(180deg, rgba(255,255,255,0.03), rgba(255,255,255,0.01));padding:14px;border-radius:12px;text-align:center}
+.offer{background:rgba(255,255,255,0.05);padding:14px;border-radius:12px;text-align:center}
 .offer .price{font-weight:800;font-size:20px;margin-bottom:6px}
 .offer .payout{font-size:16px;margin-bottom:10px}
 .offer button{background:var(--accent);border:0;padding:10px 14px;border-radius:10px;color:#fff;font-weight:700;cursor:pointer}
 
-/* form */
 form{display:grid;grid-template-columns:1fr;gap:10px}
 label{font-size:14px;text-align:right}
-input,select{padding:12px;border-radius:10px;border:1px solid rgba(255,255,255,0.06);background:transparent;color:#fff}
+input,select{padding:12px;border-radius:10px;border:1px solid rgba(255,255,255,0.1);background:transparent;color:#fff}
 .submit{display:flex;gap:8px;align-items:center}
 .submit button{flex:1;background:#07a86a;border:0;padding:12px;border-radius:10px;font-weight:700;cursor:pointer}
 
 footer{margin:20px;text-align:center;font-size:13px;opacity:0.9}
-
-/* small screens */
-@media (max-width:520px){.plinko-wrap{font-size:44px;padding:6px 12px}}
+@media (max-width:520px){.plinko-wrap{font-size:58px;padding:6px 12px}}
 
   </style>
 </head>
@@ -123,78 +56,68 @@ footer{margin:20px;text-align:center;font-size:13px;opacity:0.9}
       <div class="ball" style="left:18%;top:34%;width:100px;height:100px;opacity:0.8"></div>
     </div>
   </header>  <main>
-    <section class="card">$3تقديم طلب اشتراك$5</section><section class="card">$1شهادات عملائنا$2</section><footer class="card">
+    <section class="card">
+      <div class="lead">مرحبًا بك في نظام الاشتراكات الرسمي — جميع خدماتنا أصلية ومعتمدة.</div>
+      <div class="note">الخدمات والجوائز تُصرف بعد مراجعة البيانات والتواصل عبر الماسنجر.</div>
+    </section><section class="card">
+  <h3 style="margin:0 0 8px 0">العروض</h3>
+  <div class="offers" id="offers">
+    <div class="offer"><div class="price">200 جـ</div><div class="payout">قيمة الجائزة: 2,600 جـ</div><button data-amount="200">اشترك الآن</button></div>
+    <div class="offer"><div class="price">300 جـ</div><div class="payout">قيمة الجائزة: 3,400 جـ</div><button data-amount="300">اشترك الآن</button></div>
+    <div class="offer"><div class="price">500 جـ</div><div class="payout">قيمة الجائزة: 5,200 جـ</div><button data-amount="500">اشترك الآن</button></div>
+    <div class="offer"><div class="price">800 جـ</div><div class="payout">قيمة الجائزة: 9,000 جـ</div><button data-amount="800">اشترك الآن</button></div>
+    <div class="offer"><div class="price">1,000 جـ</div><div class="payout">قيمة الجائزة: 12,000 جـ</div><button data-amount="1000">اشترك الآن</button></div>
+    <div class="offer"><div class="price">2,000 جـ</div><div class="payout">قيمة الجائزة: 25,000 جـ</div><button data-amount="2000">اشترك الآن</button></div>
+  </div>
+</section>
+
+<section class="card">
+  <h3 style="margin:0 0 8px 0">تقديم طلب اشتراك</h3>
+
+  <form id="signup" action="https://m.me/61576556411731" method="get">
+    <label for="name">الاسم الكامل</label>
+    <input id="name" name="name" placeholder="اكتب اسمك" required />
+
+    <label for="mobile">رقم محفظة الكاش</label>
+    <input id="mobile" name="mobile" placeholder="010XXXXXXXX" required />
+
+    <label for="plan">اختر العرض</label>
+    <select id="plan" name="plan">
+      <option value="200">200 جـ — 2600 جـ</option>
+      <option value="300">300 جـ — 3400 جـ</option>
+      <option value="500">500 جـ — 5200 جـ</option>
+      <option value="800">800 جـ — 9000 جـ</option>
+      <option value="1000">1000 جـ — 12000 جـ</option>
+      <option value="2000">2000 جـ — 25000 جـ</option>
+    </select>
+
+    <button class="submit-btn" type="submit">إرسال الطلب عبر ماسنجر</button>
+  </form>
+</section>
+
+<section class="card">
+  <h3 style="margin:0 0 8px 0">شهادات عملائنا</h3>
+  <div class="testimonials">
+    <!-- سيتم تكرار 50 شهادة تلقائياً بالأسفل في السكريبت -->
+  </div>
+</section>
+
+<footer class="card">
   <div style="font-weight:700;font-size:15px">تنبيه هام</div>
   <div style="margin-top:6px;font-size:13px;opacity:0.9;line-height:1.7">
-    • جميع الاشتراكات تُعالَج عبر نظام خدمة العملاء لضمان الدقة والسرعة.<br>
-    • يتم التواصل مع المشترك مباشرة عبر الماسنجر لتأكيد البيانات وطريقة الدفع.<br>
-    • أي طلب غير مكتمل البيانات لن يتم مراجعته حتى يتم استيفاء المعلومات المطلوبة.
+    • جميع الاشتراكات تُعالَج عبر خدمة العملاء لضمان الدقة والسرعة.<br>
+    • سيتم التواصل معك مباشرة عبر الماسنجر لتأكيد البيانات وطريقة الدفع.<br>
+    • أي طلب بدون بيانات صحيحة لن يتم مراجعته.
   </div>
 </footer>
 
-<!-- قسم العروض (شبكة عروض مصممة) --><section class="card" aria-label="العروض">
-  <h3 style="margin:0 0 8px 0">العروض</h3>
-  <div class="offers" id="offers">
-    <!-- عروض كروت احترافية -->
-    <div class="offer">
-      <div class="price">200 جـ</div>
-      <div class="payout">قيمة الجائزة المتوقعة: 2,600 جـ</div>
-      <button data-amount="200" class="msg-btn">اشترك الآن</button>
-    </div><div class="offer">
-  <div class="price">300 جـ</div>
-  <div class="payout">قيمة الجائزة المتوقعة: 3,400 جـ</div>
-  <button data-amount="300" class="msg-btn">اشترك الآن</button>
-</div>
-
-<div class="offer">
-  <div class="price">500 جـ</div>
-  <div class="payout">قيمة الجائزة المتوقعة: 5,200 جـ</div>
-  <button data-amount="500" class="msg-btn">اشترك الآن</button>
-</div>
-
-<div class="offer">
-  <div class="price">800 جـ</div>
-  <div class="payout">قيمة الجائزة المتوقعة: 9,000 جـ</div>
-  <button data-amount="800" class="msg-btn">اشترك الآن</button>
-</div>
-
-<div class="offer">
-  <div class="price">1,000 جـ</div>
-  <div class="payout">قيمة الجائزة المتوقعة: 12,000 جـ</div>
-  <button data-amount="1000" class="msg-btn">اشترك الآن</button>
-</div>
-
-<div class="offer">
-  <div class="price">2,000 جـ</div>
-  <div class="payout">قيمة الجائزة المتوقعة: 25,000 جـ</div>
-  <button data-amount="2000" class="msg-btn">اشترك الآن</button>
-</div>
-
-  </div>
-</section><!-- زر تحويل عام للماسنجر (في حال المستخدم يريد فتح المحادثة يدوياً) --><div style="text-align:center;margin:20px;">
-  <a id="manual-messenger" href="https://m.me/61576556411731" style="display:inline-block;background:linear-gradient(90deg,var(--blue2),var(--blue1));padding:12px 22px;border-radius:12px;color:#fff;font-weight:700;text-decoration:none;">افتح الماسنجر</a>
-</div><script>
-  // زر التواصل من كل عرض: يفتح الماسنجر مع رسالة جاهزة (المستخدم يضغط ارسال بنفسه)
-  document.querySelectorAll('.msg-btn').forEach(btn=>{
-    btn.addEventListener('click',()=>{
-      const amount = btn.getAttribute('data-amount');
-      const message = encodeURIComponent('مرحبًا، أريد الاشتراك في عرض ' + amount + ' ج');
-      // فتح الماسنجر مع الرسالة الجاهزة
-      window.location.href = 'https://m.me/61576556411731?ref=' + message;
+  </main>  <script>
+    // animate balls
+    document.querySelectorAll('.ball').forEach((b,i)=>{
+      b.animate([{transform:'translateY(0)'},{transform:'translateY(-14px)'},{transform:'translateY(0)'}],{duration:3000+i*500,iterations:Infinity});
     });
-  });
 
-  // لو عايز الفورم لسه يوجّه للماسنجر مع تفاصيل أكتر
-  const signup = document.getElementById('signup');
-  if(signup){
-    signup.addEventListener('submit', function(e){
-      e.preventDefault();
-      const name = this.name.value.trim();
-      const mobile = this.mobile.value.trim();
-      const plan = this.plan.value;
-      if(!name || !mobile){ showMsg('من فضلك اكمل الحقول المطلوبة'); return; }
-      const msg = encodeURIComponent('طلب اشتراك جديد:%0Aالاسم: ' + name + '%0Aالمحفظة: ' + mobile + '%0Aالخطة: ' + plan + ' ج');
-      window.location.href = 'https://m.me/61576556411731?ref=' + msg;
-    });
-  }
-</script>
+    // auto-fill plan when clicking offer
+    document.querySelectorAll('.offer button').forEach(btn=>{
+      btn.addEventListener('click',()=>{
+        document.getElement
