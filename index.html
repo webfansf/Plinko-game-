@@ -1,225 +1,316 @@
 <!doctype html>
 <html lang="ar" dir="rtl">
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>PLINKO – طلب الاشتراك</title>
-  <style>
-    :root { --primary: #0b59d6; --accent: #ff3b3b; --bg: #eaf2ff; --card: #0b254a; --text: #0b254a; }
-    body { margin: 0; font-family: "Cairo", sans-serif; background: linear-gradient(180deg, #eaf2ff, #d8e9ff); color: var(--text); padding: 20px; }
-    .wrap { max-width: 980px; margin: 12px auto; display: grid; grid-template-columns: 1fr 400px; gap: 18px; align-items: start; }
-    header { grid-column: 1/-1; text-align: center; margin-bottom: 6px; }
-    header h1 { margin: 0; font-size: 28px; color: var(--card); }
-    header p { margin: 6px 0 0; color: #254; opacity: .85; }
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>PLINKO — عرض الاشتراكات</title>
+<style>
+  :root{
+    --blue:#0a4ccf;
+    --accent:#ff2a2a;
+    --glass: rgba(255,255,255,0.06);
+    --muted: rgba(255,255,255,0.9);
+    --card-bg: rgba(255,255,255,0.10);
+  }
+  *{box-sizing:border-box}
+  html,body{height:100%;margin:0;font-family:"Cairo",sans-serif;background:linear-gradient(180deg,var(--blue),#083a8f);color:white;-webkit-font-smoothing:antialiased;}
+  .wrap{max-width:980px;margin:18px auto;padding:18px;position:relative}
 
-    .left { background: linear-gradient(180deg, rgba(255,255,255,0.9), rgba(255,255,255,0.92)); border-radius: 12px; padding: 16px; box-shadow: 0 10px 30px rgba(11,37,74,0.08); position: relative; overflow: hidden; }
-    .plinko-title { font-weight: 900; font-size: 56px; letter-spacing: 6px; color: white; background: linear-gradient(90deg, var(--primary), #2b6bff); padding: 10px 18px; border-radius: 12px; display: inline-block; box-shadow: 0 10px 30px rgba(11,37,74,0.12); }
-    .plinko-sub { margin-top: 8px; color: #012046; font-weight: 600; }
+  /* PLINKO title */
+  .title-wrap{text-align:center;margin-bottom:12px;position:relative;z-index:3}
+  .plinko{
+    display:inline-block;
+    font-weight:900;
+    font-size:64px;
+    letter-spacing:6px;
+    padding:8px 18px;
+    border-radius:14px;
+    background:linear-gradient(90deg,#185eff,#3fb0ff);
+    box-shadow: 0 12px 40px rgba(2,12,60,0.45);
+    transform-origin:center;
+    animation: floatTitle 3s ease-in-out infinite;
+    text-transform:uppercase;
+  }
+  @keyframes floatTitle{
+    0%{ transform: translateY(0) scale(1); }
+    50%{ transform: translateY(-8px) scale(1.02); }
+    100%{ transform: translateY(0) scale(1); }
+  }
+  .subtitle{ margin-top:6px; color:rgba(255,255,255,0.9); font-weight:700; }
 
-    .balls { position: absolute; inset: 0; pointer-events: none; z-index: 0; }
-    .ball { position: absolute; border-radius: 50%; filter: blur(8px); opacity: .9; }
-    .ball.b1 { width: 120px; height: 120px; left: 6%; top: 6%; background: radial-gradient(circle at 30% 30%, #fff6, #ff3b3b 45%); }
-    .ball.b2 { width: 64px; height: 64px; left: 72%; top: 8%; background: radial-gradient(circle at 30% 30%, #fff6, #ff3b3b 45%); }
-    .ball.b3 { width: 90px; height: 90px; left: 46%; top: 22%; background: radial-gradient(circle at 30% 30%, #fff6, #ff3b3b 45%); }
-    .ball.b4 { width: 46px; height: 46px; left: 22%; top: 40%; background: radial-gradient(circle at 30% 30%, #fff6, #ff3b3b 45%); }
+  /* decorative blurred balls */
+  .balls{ position: absolute; inset:0; pointer-events:none; z-index:1; overflow:hidden; }
+  .ball{ position:absolute; border-radius:50%; filter:blur(10px); opacity:0.95; background: radial-gradient(circle at 30% 30%, #fff4, var(--accent) 45%); transform: translate3d(0,0,0);}
+  .b1{ width:160px; height:160px; left:6%; top:6%;}
+  .b2{ width:100px; height:100px; left:72%; top:8%;}
+  .b3{ width:120px; height:120px; left:50%; top:26%;}
+  .b4{ width:70px; height:70px; left:22%; top:44%;}
+  .b5{ width:54px; height:54px; left:78%; top:60%;}
 
-    .offers { position: relative; z-index: 2; margin-top: 18px; }
-    .offers h2 { margin: 0 0 8px; font-size: 20px; color: var(--card); }
-    .offer-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 10px; }
-    .offer { background: linear-gradient(180deg, rgba(255,255,255,0.98), rgba(255,255,255,0.96)); border-radius: 10px; padding: 12px; border: 1px solid rgba(11,37,74,0.06); box-shadow: 0 6px 18px rgba(11,37,74,0.04); }
-    .offer strong { display: block; font-size: 18px; color: var(--primary); }
-    .offer small { display: block; margin-top: 6px; color: #333; }
+  /* main content */
+  .main{ display:flex; gap:20px; align-items:flex-start; position:relative; z-index:2; }
+  .visual{ flex:1; min-height:460px; background: linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01)); border-radius:14px; padding:16px; position:relative; overflow:hidden; box-shadow:0 10px 30px rgba(0,0,0,0.25); border:1px solid rgba(255,255,255,0.03) }
+  .side{ width:420px; flex:0 0 420px; }
 
-    .disclaimer { margin-top: 12px; padding: 10px; border-radius: 8px; background: #fff7f7; border: 1px solid rgba(255,51,51,0.08); color: #7a1e1e; font-weight: 700; }
+  /* plinko canvas area */
+  #plinkoCanvas{ width:100%; height:320px; border-radius:10px; background: linear-gradient(180deg, rgba(0,0,0,0.06), rgba(255,255,255,0.02)); display:flex; align-items:center; justify-content:center; color:rgba(255,255,255,0.9); font-weight:800; box-shadow: inset 0 -6px 18px rgba(0,0,0,0.08); }
 
-    .card { background: white; border-radius: 12px; padding: 14px; box-shadow: 0 10px 30px rgba(11,37,74,0.06); position: relative; z-index: 2; }
-    .card h3 { margin: 0 0 8px; color: var(--card); }
-    label { display: block; margin-top: 10px; font-size: 14px; color: #333; }
-    input[type="text"], input[type="tel"], select { width: 100%; padding: 12px; border-radius: 10px; border: 1px solid #d6e6ff; margin-top: 6px; font-size: 15px; }
-    input[type="file"] { margin-top: 8px; }
-    .actions { display: flex; gap: 8px; margin-top: 12px; }
-    .btn { flex: 1; padding: 12px; border-radius: 10px; border: 0; font-weight: 800; cursor: pointer; }
-    .btn.primary { background: linear-gradient(90deg, var(--primary), #2b6bff); color: white; }
-    .btn.secondary { background: transparent; border: 1px solid #cce0ff; color: var(--primary); }
+  /* offers grid */
+  .offers{ margin-top:14px; display:grid; grid-template-columns:repeat(2,1fr); gap:10px; }
+  .offer{ background: var(--card-bg); padding:12px; border-radius:10px; text-align:center; font-weight:800; font-size:17px; border:1px solid rgba(255,255,255,0.04); }
+  .offer small{ display:block; margin-top:6px; font-weight:700; color:var(--muted); font-size:13px; opacity:0.95; }
 
-    .save-note { margin-top: 10px; font-size: 13px; color: #334; opacity: .85; }
+  /* card / form */
+  .card{ background: rgba(255,255,255,0.03); padding:14px; border-radius:12px; border:1px solid rgba(255,255,255,0.04) }
+  label{ display:block; margin-top:10px; font-weight:700 }
+  input, select { width:100%; padding:12px; border-radius:10px; border:0; margin-top:6px; font-size:15px; background: rgba(255,255,255,0.02); color:white }
+  input::placeholder{ color: rgba(255,255,255,0.6) }
+  .actions{ display:flex; gap:10px; margin-top:12px; }
+  .btn{ flex:1; padding:12px; border-radius:10px; border:0; font-weight:900; cursor:pointer; font-size:16px }
+  .btn.primary{ background: linear-gradient(90deg,var(--accent),#ff6b6b); color:white }
+  .btn.ghost{ background: transparent; border:1px solid rgba(255,255,255,0.08); color:white }
 
-    .leads-wrap { grid-column: 1/-1; margin-top: 14px; background: white; padding: 12px; border-radius: 10px; box-shadow: 0 8px 20px rgba(11,37,74,0.04); }
-    table { width: 100%; border-collapse: collapse; font-size: 14px; }
-    th, td { padding: 8px; border-bottom: 1px solid #f1f6ff; text-align: right; }
-    th { color: #123; font-weight: 700; }
-    .small { font-size: 12px; color: #666; }
+  .note{ margin-top:10px; font-size:13px; color:rgba(255,255,255,0.85); }
+  .small{ font-size:13px; color:rgba(255,255,255,0.85); margin-top:8px }
 
-    @media (max-width: 900px) {
-      .wrap { grid-template-columns: 1fr; }
-    }
-  </style>
+  /* local leads area */
+  .leads{ margin-top:12px; display:none; background: rgba(255,255,255,0.02); padding:10px; border-radius:10px }
+  table{ width:100%; border-collapse:collapse; font-size:14px; color:rgba(255,255,255,0.95) }
+  th,td{ padding:8px; border-bottom:1px solid rgba(255,255,255,0.03); text-align:right }
+
+  footer{ margin-top:20px; text-align:center; color:rgba(255,255,255,0.9); font-size:13px }
+
+  /* responsive */
+  @media (max-width:940px){
+    .main{ flex-direction:column }
+    .side{ width:100%; }
+    .offers{ grid-template-columns:1fr }
+    .plinko{ font-size:48px }
+    #plinkoCanvas{ height:220px }
+  }
+</style>
 </head>
 <body>
 
-  <header>
-    <h1>PLINKO — صفحة الاشتراك</h1>
-    <p>اختر العرض المناسب وقم بتسجيل بياناتك وسنقوم بالتواصل معك عبر Messenger</p>
-  </header>
-
-  <div class="wrap">
-    <div class="left">
-      <div class="balls" aria-hidden="true">
-        <div class="ball b1"></div>
-        <div class="ball b2"></div>
-        <div class="ball b3"></div>
-        <div class="ball b4"></div>
-      </div>
-
-      <div style="position: relative; z-index: 2;">
-        <div class="plinko-title">PLINKO</div>
-        <div class="plinko-sub">اختَر عرضك وسنتواصل معك فوراً</div>
-
-        <div class="offers">
-          <h2>العروض المتاحة</h2>
-          <div class="offer-grid">
-            <div class="offer"><strong>عرض 200 ج</strong><small>يكسب 2,600 ج</small></div>
-            <div class="offer"><strong>عرض 300 ج</strong><small>يكسب 3,400 ج</small></div>
-            <div class="offer"><strong>عرض 500 ج</strong><small>يكسب 5,200 ج</small></div>
-            <div class="offer"><strong>عرض 800 ج</strong><small>يكسب 9,000 ج</small></div>
-            <div class="offer"><strong>عرض 1000 ج</strong><small>يكسب 12,000 ج</small></div>
-            <div class="offer"><strong>عرض 2000 ج</strong><small>يكسب 25,000 ج</small></div>
-          </div>
-
-          <div class="disclaimer" role="note">
-            تنبيه: الأرقام والعوائد المذكورة أعلاه **لم تُضمن** رسميًا، وهي لأغراض عرض فقط. تعاملات مالية يجب أن تكون واضحة وشفافة.
-          </div>
-        </div>
-      </div>
-    </div>
-
-    <aside class="card" aria-labelledby="formTitle">
-      <h3 id="formTitle">طلب الاشتراك</h3>
-
-      <form id="subForm">
-        <label>الاسم الكامل</label>
-        <input type="text" id="name" placeholder="ادخل اسمك">
-
-        <label>رقم الهاتف</label>
-        <input type="tel" id="phone" placeholder="مثال: 01xxxxxxxx" required>
-
-        <label>اختيار العرض</label>
-        <select id="plan">
-          <option value="200">200 ج</option>
-          <option value="300">300 ج</option>
-          <option value="500">500 ج</option>
-          <option value="800">800 ج</option>
-          <option value="1000">1000 ج</option>
-          <option value="2000">2000 ج</option>
-        </select>
-
-        <div class="actions">
-          <button type="button" class="btn primary" id="sendMessenger">أرسل عبر Messenger</button>
-          <button type="button" class="btn secondary" id="saveLocal">حفظ محليًا</button>
-        </div>
-
-        <div class="save-note small">سيتم حفظ الطلب محليًا ويمكنك تنزيله لاحقًا.</div>
-      </form>
-    </aside>
-
-    <div class="leads-wrap" id="leadsWrap">
-      <div style="display:flex; justify-content:space-between; align-items:center;">
-        <strong>طلبات محفوظة</strong>
-        <div>
-          <button class="btn secondary" id="downloadCSV">تنزيل CSV</button>
-          <button class="btn secondary" id="clearAll">مسح الكل</button>
-        </div>
-      </div>
-
-      <table id="leadsTable">
-        <thead>
-          <tr><th>الاسم</th><th>رقم الهاتف</th><th>العرض</th><th>الوقت</th></tr>
-        </thead>
-        <tbody></tbody>
-      </table>
-    </div>
-
+<div class="wrap">
+  <div class="balls" aria-hidden="true">
+    <div class="ball b1"></div>
+    <div class="ball b2"></div>
+    <div class="ball b3"></div>
+    <div class="ball b4"></div>
+    <div class="ball b5"></div>
   </div>
 
-  <script>
-    const messengerLink = "https://m.me/587333667807395?source=qr_link_share";
+  <div class="title-wrap">
+    <div class="plinko">PLINKO</div>
+    <div class="subtitle">اختَر العرض وسنقوم بالتواصل معك — صفحة اشتراك شرعية</div>
+  </div>
 
-    function loadLeads(){
-      return JSON.parse(localStorage.getItem('plinko_leads_v2') || '[]');
-    }
-    function saveLeads(arr){
-      localStorage.setItem('plinko_leads_v2', JSON.stringify(arr));
-    }
+  <div class="main" role="main">
+    <section class="visual" aria-label="منطقة العرض">
+      <div id="plinkoCanvas">تأثير بصري بلينكو — تحميل...</div>
 
-    function renderTable(){
-      const tbody = document.querySelector('#leadsTable tbody');
-      tbody.innerHTML = '';
-      const leads = loadLeads();
-      if (leads.length === 0) {
-        tbody.innerHTML = '<tr><td colspan="4" style="text-align:center; color:#666; padding:12px;">لا توجد طلبات محفوظة</td></tr>';
-        return;
-      }
-      leads.forEach(l => {
-        const tr = document.createElement('tr');
-        tr.innerHTML = `<td>${escapeHtml(l.name)}</td><td>${escapeHtml(l.phone)}</td><td>${escapeHtml(l.plan)}</td><td>${new Date(l.ts).toLocaleString()}</td>`;
-        tbody.appendChild(tr);
-      });
-    }
+      <div class="offers" aria-live="polite">
+        <div class="offer"><strong>عرض 200ج</strong><small>يكسب 2,600 ج</small></div>
+        <div class="offer"><strong>عرض 300ج</strong><small>يكسب 3,400 ج</small></div>
+        <div class="offer"><strong>عرض 500ج</strong><small>يكسب 5,200 ج</small></div>
+        <div class="offer"><strong>عرض 800ج</strong><small>يكسب 9,000 ج</small></div>
+        <div class="offer"><strong>عرض 1000ج</strong><small>يكسب 12,000 ج</small></div>
+        <div class="offer"><strong>عرض 2000ج</strong><small>يكسب 25,000 ج</small></div>
+      </div>
 
-    function escapeHtml(s){
-      return ('' + s).replace(/[&<>"']/g, c => ({
-        '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;'
-      }[c]));
-    }
+      <div class="small" style="margin-top:12px;">ملاحظة: القيم المذكورة توضيحية وغير مضمونة.</div>
+    </section>
 
-    document.getElementById('saveLocal').addEventListener('click', ()=>{
-      const name = document.getElementById(' name')?.value?.trim() || '';
-      const phone = document.getElementById('phone').value.trim();
-      const plan = document.getElementById('plan').value;
-      if (!phone) { alert('من فضلك أدخل رقم الهاتف.'); return; }
-      const leads = loadLeads();
-      leads.unshift({ name, phone, plan, ts: new Date().toISOString() });
-      saveLeads(leads);
-      renderTable();
-      alert('تم حفظ الطلب محليًا.');
+    <aside class="side" aria-label="نموذج الاشتراك">
+      <div class="card">
+        <h3 style="margin:0 0 6px 0">طلب اشتراك</h3>
+
+        <form id="subForm" onsubmit="return false;">
+          <label for="name">الاسم الكامل</label>
+          <input id="name" type="text" placeholder="ادخل اسمك">
+
+          <label for="phone">رقم الهاتف</label>
+          <input id="phone" type="tel" placeholder="01xxxxxxxx" required>
+
+          <label for="plan">اختر العرض</label>
+          <select id="plan">
+            <option value="200">عرض 200ج</option>
+            <option value="300">عرض 300ج</option>
+            <option value="500">عرض 500ج</option>
+            <option value="800">عرض 800ج</option>
+            <option value="1000">عرض 1000ج</option>
+            <option value="2000">عرض 2000ج</option>
+          </select>
+
+          <label for="fileInput">ارفق صورة (اختياري)</label>
+          <input id="fileInput" type="file" accept="image/*">
+
+          <div class="actions">
+            <button id="sendMessenger" class="btn primary" type="button">إرسال عبر Messenger</button>
+            <button id="saveLocal" class="btn ghost" type="button">حفظ محليًا</button>
+          </div>
+
+          <div class="note">ستُحفظ بياناتك محليًا لحين مراجعتها ويمكنك تنزيلها كملف CSV.</div>
+        </form>
+
+        <div class="leads" id="leadsBox" aria-live="polite">
+          <strong>الطلبات المحفوظة محليًا</strong>
+          <table id="leadsTable"><thead><tr><th>الاسم</th><th>الهاتف</th><th>العرض</th><th>الوقت</th></tr></thead><tbody></tbody></table>
+          <div style="display:flex;gap:8px;margin-top:8px">
+            <button id="downloadCSV" class="btn ghost">تنزيل CSV</button>
+            <button id="clearAll" class="btn ghost">مسح الكل</button>
+          </div>
+        </div>
+
+      </div>
+    </aside>
+  </div>
+
+  <footer>PLINKO © — صفحة عرض اشتراكات</footer>
+</div>
+
+<script>
+/* ====== إعدادات ====== */
+const MESSENGER_LINK = "https://m.me/587333667807395?source=qr_link_share";
+const STORAGE_KEY = "plinko_singlepage_leads_v1";
+
+/* ====== تأثير بلينكو بصري على canvas ====== */
+(function plinkoVisual(){
+  const el = document.getElementById('plinkoCanvas');
+  if(!el) return;
+  const canvas = document.createElement('canvas');
+  function resize(){
+    canvas.width = el.clientWidth;
+    canvas.height = el.clientHeight;
+  }
+  resize();
+  el.innerHTML = '';
+  el.appendChild(canvas);
+  const ctx = canvas.getContext('2d');
+
+  // create floating balls array
+  const balls = [];
+  const N = 14;
+  for(let i=0;i<N;i++){
+    balls.push({
+      x: Math.random()*canvas.width,
+      y: Math.random()*-canvas.height,
+      r: 6 + Math.random()*18,
+      vy: 0.6 + Math.random()*1.4,
+      amp: 0.5 + Math.random()*2.5,
+      phase: Math.random()*Math.PI*2
     });
+  }
 
-    document.getElementById('sendMessenger').addEventListener('click', ()=>{
-      const name = document.getElementById('name').value.trim();
-      const phone = document.getElementById('phone').value.trim();
-      const plan = document.getElementById('plan').value;
-      if (!phone) { alert('من فضلك أدخل رقم الهاتف'); return; }
+  window.addEventListener('resize', () => {
+    resize();
+  });
 
-      const msg = `طلب اشتراك PLINKO%0Aالعرض: ${plan} ج%0Aالاسم: ${name || '-'}%0Aالهاتف: ${phone}%0A(هذه معلومات اشتراك)`;
-      window.open(messengerLink + `&ref=${msg}`, '_blank');
-    });
+  function draw(){
+    ctx.clearRect(0,0,canvas.width,canvas.height);
+    for(const b of balls){
+      b.y += b.vy;
+      b.x += Math.sin(b.y*0.02 + b.phase) * b.amp;
+      if(b.y - b.r > canvas.height){ b.y = -20 - Math.random()*canvas.height; b.x = Math.random()*canvas.width; }
+      const grad = ctx.createRadialGradient(b.x - b.r*0.3, b.y - b.r*0.3, 1, b.x, b.y, b.r);
+      grad.addColorStop(0, 'rgba(255,255,255,0.9)');
+      grad.addColorStop(0.3, 'rgba(255,80,80,0.95)');
+      grad.addColorStop(1, 'rgba(255,40,40,0.16)');
+      ctx.fillStyle = grad;
+      ctx.shadowBlur = 12;
+      ctx.shadowColor = 'rgba(255,50,50,0.6)';
+      ctx.beginPath();
+      ctx.arc(b.x, b.y, b.r, 0, Math.PI*2);
+      ctx.fill();
+    }
+    requestAnimationFrame(draw);
+  }
+  draw();
+})();
 
-    document.getElementById('downloadCSV').addEventListener('click', ()=>{
-      const leads = loadLeads();
-      if (!leads.length) { alert('لا توجد بيانات للتحميل.'); return; }
-      const header = ['name','phone','plan','ts'];
-      const rows = leads.map(l => [l.name, l.phone, l.plan, l.ts]);
-      const csv = [header, ...rows]
-        .map(r => r.map(cell => `"${(''+cell).replace(/"/g, '""')}"`).join(','))
-        .join('\n');
-      const blob = new Blob([csv], { type: 'text/csv;charset=utf-8;' });
-      const url = URL.createObjectURL(blob);
-      const a = document.createElement('a');
-      a.href = url;
-      a.download = 'plinko_requests.csv';
-      document.body.appendChild(a);
-      a.click();
-      a.remove();
-      URL.revokeObjectURL(url);
-    });
+/* ====== مساعدات التخزين والـ CSV ====== */
+function loadLeads(){
+  try { return JSON.parse(localStorage.getItem(STORAGE_KEY) || '[]'); }
+  catch(e){ return []; }
+}
+function saveLeads(arr){
+  localStorage.setItem(STORAGE_KEY, JSON.stringify(arr));
+}
+function renderLeads(){
+  const leads = loadLeads();
+  const box = document.getElementById('leadsBox');
+  const tbody = document.querySelector('#leadsTable tbody');
+  if(!leads.length){ box.style.display = 'none'; return; }
+  box.style.display = 'block';
+  tbody.innerHTML = '';
+  leads.forEach(l=>{
+    const tr = document.createElement('tr');
+    tr.innerHTML = `<td>${escapeHtml(l.name||'')}</td><td>${escapeHtml(l.phone)}</td><td>${escapeHtml(l.plan)}</td><td>${new Date(l.ts).toLocaleString()}</td>`;
+    tbody.appendChild(tr);
+  });
+}
+function escapeHtml(s){ return (''+s).replace(/[&<>"']/g, c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c])); }
 
-    document.getElementById('clearAll').addEventListener('click', ()=>{
-      if (!confirm('هل تريد حذف كل الطلبات؟')) return;
-      localStorage.removeItem('plinko_leads_v2');
-      renderTable();
-    });
+/* ====== أزرار النموذج ====== */
+document.getElementById('saveLocal').addEventListener('click', ()=>{
+  const name = document.getElementById('name').value.trim();
+  const phone = document.getElementById('phone').value.trim();
+  const plan = document.getElementById('plan').value;
+  if(!phone){ alert('من فضلك أدخل رقم الهاتف'); return; }
+  const leads = loadLeads();
+  leads.unshift({ name, phone, plan, ts: new Date().toISOString() });
+  saveLeads(leads);
+  alert('تم حفظ الطلب محليًا.');
+  renderLeads();
+});
 
-    renderTable();
-  </script>
+document.getElementById('sendMessenger').addEventListener('click', ()=>{
+  const name = document.getElementById('name').value.trim();
+  const phone = document.getElementById('phone').value.trim();
+  const plan = document.getElementById('plan').value;
+  if(!phone){ alert('من فضلك أدخل رقم الهاتف'); return; }
+
+  // if a file is attached, just mention it (we do not upload)
+  const fileInput = document.getElementById('fileInput');
+  let fileNote = '';
+  if(fileInput && fileInput.files && fileInput.files.length){
+    fileNote = ' (تم إرفاق ملف محليًا)';
+  }
+
+  const msg = `طلب اشتراك PLINKO%0Aالعرض: ${plan}ج%0Aالاسم: ${encodeURIComponent(name || '-')}%0Aالهاتف: ${encodeURIComponent(phone)}%0A${encodeURIComponent(fileNote)}`;
+  // open messenger in new tab
+  window.open(MESSENGER_LINK + '&ref=' + msg, '_blank');
+});
+
+/* CSV تنزيل */
+document.getElementById('downloadCSV').addEventListener('click', ()=>{
+  const leads = loadLeads();
+  if(!leads.length){ alert('لا توجد بيانات للتحميل'); return; }
+  const header = ['name','phone','plan','ts'];
+  const rows = leads.map(l => [l.name||'', l.phone, l.plan, l.ts]);
+  const csv = [header, ...rows].map(r => r.map(c => `"${(''+c).replace(/"/g,'""')}"`).join(',')).join('\n');
+  const blob = new Blob([csv], { type: 'text/csv;charset=utf-8;' });
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement('a');
+  a.href = url;
+  a.download = 'plinko_leads.csv';
+  document.body.appendChild(a);
+  a.click();
+  a.remove();
+  URL.revokeObjectURL(url);
+});
+
+/* مسح الكل */
+document.getElementById('clearAll').addEventListener('click', ()=>{
+  if(!confirm('هل تريد مسح كل الطلبات المحفوظة؟')) return;
+  localStorage.removeItem(STORAGE_KEY);
+  renderLeads();
+});
+
+/* initial render */
+renderLeads();
+
+</script>
 </body>
 </html>
