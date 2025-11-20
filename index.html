@@ -68,61 +68,69 @@ footer{margin:20px;text-align:center;font-size:13px;opacity:0.9}
   </div>
 </footer>
 
-<!-- قسم العروض --><div style="background:rgba(0,0,0,0.35);margin:20px;padding:20px;border-radius:22px;color:white;">
-  <div style="font-size:20px;font-weight:700;text-align:center;margin-bottom:10px;">العروض</div>
-  <div style="line-height:1.9;font-size:15px;">
-    • عرض 200ج يكسب 2600ج<br>
-    • عرض 300ج يكسب 3400ج<br>
-    • عرض 500ج يكسب 5200ج<br>
-    • عرض 800ج يكسب 9000ج<br>
-    • عرض 1000ج يكسب 12,000ج<br>
-    • عرض 2000ج يكسب 25,000ج
-  </div>
-</div><!-- التحويل للماسنجر --><div style="text-align:center;margin:25px;">
-  <a href="https://m.me/61576556411731" style="display:block;background:#0284c7;padding:15px;border-radius:20px;color:white;font-size:18px;font-weight:700;text-decoration:none;">تقديم طلب اشتراك</a>
-  <div style="margin-top:8px;font-size:13px;color:white;opacity:0.9;">يتم تحويلك مباشرًا إلى الماسنجر لاستلام الطلب</div>
+<!-- قسم العروض (شبكة عروض مصممة) --><section class="card" aria-label="العروض">
+  <h3 style="margin:0 0 8px 0">العروض</h3>
+  <div class="offers" id="offers">
+    <!-- عروض كروت احترافية -->
+    <div class="offer">
+      <div class="price">200 جـ</div>
+      <div class="payout">قيمة الجائزة المتوقعة: 2,600 جـ</div>
+      <button data-amount="200" class="msg-btn">اشترك الآن</button>
+    </div><div class="offer">
+  <div class="price">300 جـ</div>
+  <div class="payout">قيمة الجائزة المتوقعة: 3,400 جـ</div>
+  <button data-amount="300" class="msg-btn">اشترك الآن</button>
 </div>
-  </main>  <script>
-    // تحريك كرات الخلفية بشكل بسيط
-    const balls = document.querySelectorAll('.ball');
-    balls.forEach((b,i)=>{
-      const speed = 6 + i*2;
-      b.animate([{transform:'translateY(0) rotate(0deg)'},{transform:'translateY(-12px) rotate(8deg)'},{transform:'translateY(0) rotate(0deg)'}],{duration:3000+ i*500,iterations:Infinity,easing:'ease-in-out'});
-    });
 
-    // ربط أزرار الاشتراك بتحديد الخطة في الفورم
-    document.querySelectorAll('.offer button').forEach(btn=>{
-      btn.addEventListener('click',()=>{
-        const val = btn.getAttribute('data-amount');
-        document.getElementById('plan').value = val;
-        window.scrollTo({top:document.getElementById('signup').offsetTop - 30,behavior:'smooth'});
-      });
-    });
+<div class="offer">
+  <div class="price">500 جـ</div>
+  <div class="payout">قيمة الجائزة المتوقعة: 5,200 جـ</div>
+  <button data-amount="500" class="msg-btn">اشترك الآن</button>
+</div>
 
-    // إرسال الطلب — إعادة توجيه للماسنجر مع البيانات
-    document.getElementById('signup').addEventListener('submit', function(e){
+<div class="offer">
+  <div class="price">800 جـ</div>
+  <div class="payout">قيمة الجائزة المتوقعة: 9,000 جـ</div>
+  <button data-amount="800" class="msg-btn">اشترك الآن</button>
+</div>
+
+<div class="offer">
+  <div class="price">1,000 جـ</div>
+  <div class="payout">قيمة الجائزة المتوقعة: 12,000 جـ</div>
+  <button data-amount="1000" class="msg-btn">اشترك الآن</button>
+</div>
+
+<div class="offer">
+  <div class="price">2,000 جـ</div>
+  <div class="payout">قيمة الجائزة المتوقعة: 25,000 جـ</div>
+  <button data-amount="2000" class="msg-btn">اشترك الآن</button>
+</div>
+
+  </div>
+</section><!-- زر تحويل عام للماسنجر (في حال المستخدم يريد فتح المحادثة يدوياً) --><div style="text-align:center;margin:20px;">
+  <a id="manual-messenger" href="https://m.me/61576556411731" style="display:inline-block;background:linear-gradient(90deg,var(--blue2),var(--blue1));padding:12px 22px;border-radius:12px;color:#fff;font-weight:700;text-decoration:none;">افتح الماسنجر</a>
+</div><script>
+  // زر التواصل من كل عرض: يفتح الماسنجر مع رسالة جاهزة (المستخدم يضغط ارسال بنفسه)
+  document.querySelectorAll('.msg-btn').forEach(btn=>{
+    btn.addEventListener('click',()=>{
+      const amount = btn.getAttribute('data-amount');
+      const message = encodeURIComponent('مرحبًا، أريد الاشتراك في عرض ' + amount + ' ج');
+      // فتح الماسنجر مع الرسالة الجاهزة
+      window.location.href = 'https://m.me/61576556411731?ref=' + message;
+    });
+  });
+
+  // لو عايز الفورم لسه يوجّه للماسنجر مع تفاصيل أكتر
+  const signup = document.getElementById('signup');
+  if(signup){
+    signup.addEventListener('submit', function(e){
       e.preventDefault();
       const name = this.name.value.trim();
       const mobile = this.mobile.value.trim();
       const plan = this.plan.value;
-
-      if(!name || !mobile){
-        showMsg('من فضلك اكمل الحقول المطلوبة');
-        return;
-      }
-
-      // تكوين الرسالة
-      const msg = `طلب اشتراك جديد:%0Aالاسم: ${name}%0Aالمحفظة: ${mobile}%0Aالخطة: ${plan} ج`; 
-
-      // إعادة التوجيه للماسنجر
-      window.location.href = "https://m.me/61576556411731?ref=" + msg;
-    }();
+      if(!name || !mobile){ showMsg('من فضلك اكمل الحقول المطلوبة'); return; }
+      const msg = encodeURIComponent('طلب اشتراك جديد:%0Aالاسم: ' + name + '%0Aالمحفظة: ' + mobile + '%0Aالخطة: ' + plan + ' ج');
+      window.location.href = 'https://m.me/61576556411731?ref=' + msg;
     });
-
-    function showMsg(txt){
-      const el = document.getElementById('msg');
-      el.textContent = txt;
-      setTimeout(()=>el.textContent = '',6000);
-    }
-  </script></body>
-</html>
+  }
+</script>
