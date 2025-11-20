@@ -3,254 +3,270 @@
 <head>
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width,initial-scale=1" />
-<title>Plinko — عرض تجريبي</title>
+<title>Plinko — صفحة عروض</title>
 <style>
-  /* عام */
   :root{
-    --bg:#053a8a;
-    --glow:#ffffff;
-    --accent:#ff3b3b;
+    --blue:#0b4ea2;
+    --soft-blue:#0e5fb8;
+    --accent:#ff2b2b;
+    --glass: rgba(255,255,255,0.06);
+    --card-bg: rgba(255,255,255,0.04);
   }
   html,body{height:100%;margin:0;font-family: "Segoe UI", Tahoma, Arial, sans-serif;direction:rtl}
-  .page{
-    min-height:100%;
-    background: radial-gradient(circle at 10% 10%, rgba(255,255,255,0.03), transparent 10%),
-                linear-gradient(180deg, rgba(5,58,138,1) 0%, rgba(2,33,80,1) 100%);
-    overflow:hidden;
-    position:relative;
+  body{
+    background: linear-gradient(180deg,var(--blue), #063a72 80%);
     color:#fff;
-    padding:40px 20px;
-    box-sizing:border-box;
+    overflow-x:hidden;
   }
 
-  /* ضباب وكرات حمراء */
-  .fog{position:absolute;inset:0;pointer-events:none;mix-blend-mode:screen;opacity:0.35;background:
-    radial-gradient(600px 200px at 10% 20%, rgba(255,255,255,0.03), transparent 20%),
-    radial-gradient(500px 180px at 90% 80%, rgba(255,255,255,0.02), transparent 20%);}
-  .ball {
-    position:absolute;
-    width:140px;height:140px;border-radius:50%;
-    filter:blur(18px) saturate(140%);
-    background:radial-gradient(circle at 40% 35%, rgba(255,120,120,0.95), rgba(255,20,20,0.7) 50%, rgba(120,10,10,0.2));
-    opacity:0.9;
-    mix-blend-mode:screen;
-    transform: translate3d(0,0,0);
+  /* ضباب ودوائر حمراء */
+  .fog{
+    position:fixed; inset:0; pointer-events:none; z-index:0;
+    background:
+      radial-gradient(800px 400px at 10% 20%, rgba(255,255,255,0.04), transparent 20%),
+      radial-gradient(600px 300px at 80% 80%, rgba(255,255,255,0.03), transparent 18%);
+    filter: blur(12px);
+    mix-blend-mode:overlay;
+  }
+  .ball{
+    position:absolute; width:90px; height:90px; border-radius:50%;
+    background: radial-gradient(circle at 30% 25%, #ff7b7b, var(--accent));
+    box-shadow: 0 6px 24px rgba(0,0,0,0.45), 0 0 30px rgba(255,80,80,0.25);
+    opacity:0.85; filter: blur(1.2px);
+    z-index:1;
     animation: float 8s ease-in-out infinite;
+    transform-origin:center;
   }
-  /* توزيع عدة كرات بحركات مختلفة */
-  .ball.b1{top:10%; left:5%; width:200px;height:200px; animation-duration:10s}
-  .ball.b2{top:25%; right:8%; width:160px;height:160px; animation-duration:8s; animation-delay:1s}
-  .ball.b3{bottom:5%; left:18%; width:180px;height:180px; animation-duration:12s; animation-delay:2s}
-  .ball.b4{bottom:12%; right:20%; width:120px;height:120px; animation-duration:9s; animation-delay:0.5s}
-  .ball.b5{top:45%; left:45%; width:220px;height:220px; animation-duration:14s; opacity:0.6}
-  @keyframes float {
-    0%{transform: translateY(0px) translateX(0px) scale(1)}
-    50%{transform: translateY(-30px) translateX(20px) scale(1.03)}
-    100%{transform: translateY(0px) translateX(0px) scale(1)}
+  .ball.small{width:56px;height:56px;opacity:0.9}
+  .ball.xs{width:36px;height:36px;opacity:0.95}
+
+  @keyframes float{
+    0%{transform: translateY(0) translateX(0) rotate(0deg)}
+    25%{transform: translateY(-40px) translateX(30px) rotate(10deg)}
+    50%{transform: translateY(0) translateX(-20px) rotate(0deg)}
+    75%{transform: translateY(30px) translateX(20px) rotate(-8deg)}
+    100%{transform: translateY(0) translateX(0) rotate(0deg)}
   }
 
-  /* العنوان الكبير المتحرك والمضيء */
+  /* المربع المركزي */
   .hero{
-    position:relative; z-index:5;
-    text-align:center;
-    margin-bottom:30px;
+    position:relative; z-index:2;
+    max-width:980px; margin:40px auto; padding:36px;
+    display:grid; grid-template-columns: 1fr 360px; gap:24px; align-items:start;
+  }
+  .card{
+    background: linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));
+    border: 1px solid rgba(255,255,255,0.06);
+    padding:24px; border-radius:14px; box-shadow: 0 8px 30px rgba(2,6,23,0.45);
+  }
+
+  /* عنوان PLINKO */
+  .plinko-wrap{
+    display:flex; align-items:center; gap:16px;
   }
   .plinko{
-    font-size:96px; font-weight:900;
-    letter-spacing:6px;
-    color:#fff;
-    display:inline-block;
-    padding:10px 30px;
-    border-radius:20px;
-    background:linear-gradient(90deg, rgba(255,255,255,0.04), rgba(255,255,255,0.02));
-    box-shadow: 0 10px 30px rgba(0,0,0,0.4), 0 0 40px rgba(255,255,255,0.08) inset;
-    transform: translateY(0);
-    animation: bob 3s ease-in-out infinite, glow 2.8s ease-in-out infinite;
-    text-shadow: 0 0 12px rgba(255,255,255,0.12), 0 6px 18px rgba(0,0,0,0.6);
+    font-size:84px; font-weight:900; letter-spacing:4px;
+    text-transform:uppercase; color:#fff;
+    text-shadow: 0 6px 30px rgba(0,0,0,0.6);
+    animation: pulse 2.2s ease-in-out infinite, slideX 6s linear infinite;
+    background: linear-gradient(90deg,#fff, rgba(255,255,255,0.6));
+    -webkit-background-clip: text; background-clip: text; color: transparent;
+    filter: drop-shadow(0 6px 24px rgba(255,130,130,0.12));
   }
-  @keyframes bob{
-    0%{transform: translateY(0) rotate(-1deg)}
-    50%{transform: translateY(-14px) rotate(2deg)}
-    100%{transform: translateY(0) rotate(-1deg)}
+  @keyframes pulse{
+    0%{filter:brightness(1) drop-shadow(0 0 0 rgba(255,200,200,0))}
+    50%{filter:brightness(1.4) drop-shadow(0 0 30px rgba(255,120,120,0.55))}
+    100%{filter:brightness(1) drop-shadow(0 0 0 rgba(255,200,200,0))}
   }
-  @keyframes glow{
-    0%{box-shadow: 0 0 6px rgba(255,255,255,0.06), 0 0 30px rgba(255,255,255,0.02) inset}
-    50%{box-shadow: 0 0 26px rgba(255,255,255,0.22), 0 0 60px rgba(255,255,255,0.04) inset}
-    100%{box-shadow: 0 0 6px rgba(255,255,255,0.06), 0 0 30px rgba(255,255,255,0.02) inset}
+  @keyframes slideX{
+    0%{transform:translateX(0)}
+    50%{transform:translateX(6px)}
+    100%{transform:translateX(0)}
   }
 
-  /* البطاقة الرئيسية المحتوية على محتوى */
-  .card{
-    max-width:980px;
-    margin:0 auto;
-    background: linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));
-    border-radius:16px;
-    padding:22px;
-    box-shadow: 0 10px 30px rgba(2,10,30,0.6);
-    position:relative;
-    z-index:6;
-    overflow:hidden;
+  .subtitle{margin-top:6px;color:rgba(255,255,255,0.85); font-size:15px}
+
+  /* شريط شهادات العملاء المتحرك */
+  .ticker{
+    margin-top:16px; overflow:hidden; height:42px; position:relative; border-radius:10px;
+    background: linear-gradient(90deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));
+    border:1px solid rgba(255,255,255,0.03); display:flex; align-items:center;
   }
+  .ticker .track{
+    white-space:nowrap; display:inline-block; position:absolute; left:100%;
+    animation: ticker 18s linear infinite;
+    padding-left:20px;
+  }
+  @keyframes ticker{
+    0%{left:100%}
+    100%{left:-200%}
+  }
+  .tag{display:inline-block;background:rgba(0,0,0,0.1); padding:8px 12px; margin:0 8px;border-radius:999px;font-size:14px}
 
   /* العروض */
-  .offers{display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:12px;margin-bottom:18px}
+  .offers{display:grid; grid-template-columns: repeat(2,1fr); gap:12px; margin-top:18px}
   .offer{
-    background: linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));
-    padding:14px;border-radius:12px;border:1px solid rgba(255,255,255,0.04);
-    text-align:center;
+    background:var(--card-bg); padding:14px;border-radius:10px;border:1px solid rgba(255,255,255,0.03);
   }
-  .offer .price{font-size:20px;font-weight:800}
-  .offer .gain{font-size:14px;margin-top:6px;color:#eee}
+  .offer h3{margin:0;font-size:18px}
+  .offer p{margin:6px 0 0 0; font-size:14px; color:rgba(255,255,255,0.88)}
 
-  /* تحذير/تنبيه قانوني */
-  .notice{
-    background:rgba(255,255,255,0.04);
-    color:#fff;padding:10px;border-radius:10px;margin:12px 0;font-size:14px;border-left:4px solid #ffb74d;
+  /* الفورم */
+  form{display:flex; flex-direction:column; gap:12px}
+  input, button, select, textarea{
+    padding:12px 14px;border-radius:10px;border:1px solid rgba(255,255,255,0.08);
+    background:rgba(0,0,0,0.12); color:#fff; font-size:15px; outline:none;
+  }
+  .muted{font-size:13px;color:rgba(255,255,255,0.7)}
+  .btn{
+    background:linear-gradient(90deg,#ff5252,#ff2b2b); border:none; cursor:pointer;
+    font-weight:700; box-shadow:0 8px 30px rgba(255,50,50,0.14);
   }
 
-  /* استمارة */
-  form{display:flex;gap:10px;flex-wrap:wrap;align-items:center}
-  input[type="text"], input[type="tel"]{
-    flex:1 1 220px;padding:12px;border-radius:10px;border:1px solid rgba(255,255,255,0.06);
-    background:rgba(0,0,0,0.15);color:#fff;outline:none;
-  }
-  .buttons{display:flex;gap:10px}
-  button{
-    background:linear-gradient(90deg,#ff4b4b,#ff7b7b);border:0;padding:12px 18px;border-radius:10px;color:#fff;font-weight:700;cursor:pointer;
-    box-shadow: 0 6px 18px rgba(255,60,60,0.14);
-  }
-  button.secondary{background:transparent;border:1px solid rgba(255,255,255,0.06);box-shadow:none}
+  /* تذييل / ملاحظة قانونية */
+  .note{font-size:13px;color:rgba(255,255,255,0.72); margin-top:12px; line-height:1.4}
 
-  /* شريط شهادات العملاء (انزلاقي) */
-  .marquee{
-    margin-top:16px;overflow:hidden;border-radius:8px;background:rgba(0,0,0,0.15);padding:8px 12px;border:1px solid rgba(255,255,255,0.03)
+  /* responsive */
+  @media (max-width:880px){
+    .hero{grid-template-columns:1fr; padding:18px}
+    .plinko{font-size:64px}
+    .offers{grid-template-columns:1fr}
   }
-  .marquee .track{display:inline-block;white-space:nowrap;animation: scroll 18s linear infinite}
-  @keyframes scroll{
-    0%{transform:translateX(100%)}
-    100%{transform:translateX(-100%)}
-  }
-  .marquee .item{display:inline-block;padding:0 28px;font-weight:700}
 
-  /* استجابة */
-  @media(max-width:520px){
-    .plinko{font-size:48px;padding:8px 18px}
-    .offers{grid-template-columns:repeat(2,1fr)}
-  }
 </style>
 </head>
 <body>
-  <div class="page">
-    <div class="fog"></div>
 
-    <!-- كرات حمراء ضبابية -->
-    <div class="ball b1"></div>
-    <div class="ball b2"></div>
-    <div class="ball b3"></div>
-    <div class="ball b4"></div>
-    <div class="ball b5"></div>
+<div class="fog"></div>
 
-    <div class="hero">
-      <div class="plinko">PLINKO</div>
-    </div>
+<!-- كرات حمراء متحركة (يمكن نسخ أكثر أو تعديل الإحداثيات) -->
+<div id="balls" aria-hidden="true">
+  <div class="ball" style="left:6%; top:14%; animation-duration:9s"></div>
+  <div class="ball small" style="left:22%; top:62%; animation-duration:7s"></div>
+  <div class="ball xs" style="left:42%; top:8%; animation-duration:6.5s"></div>
+  <div class="ball" style="left:66%; top:30%; animation-duration:8.2s"></div>
+  <div class="ball small" style="left:86%; top:72%; animation-duration:10s"></div>
+</div>
 
-    <div class="card" role="main" aria-labelledby="main-heading">
-      <h2 id="main-heading" style="margin:0 0 8px 0;text-align:center">مرحبًا بك في صفحة Plinko</h2>
-
-      <!-- تنبيه قانوني واضح -->
-      <p class="notice">
-        ملاحظة مهمة: المحتوى الموجود في هذه الصفحة **عرض توضيحي/ترويجي فقط** ولا يُعد وعدًا أو ضمانًا بتحقيق أرباح. لا نستخدم أي برامج غير قانونية أو طرق احتيالية. يرجى التعامل بحذر وعدم مشاركة معلومات حساسة دون التأكد.
-      </p>
-
-      <!-- العروض -->
-      <div class="offers" aria-hidden="false">
-        <div class="offer"><div class="price">200 ج</div><div class="gain">مثال ربح محتمل: 2,600 ج</div></div>
-        <div class="offer"><div class="price">300 ج</div><div class="gain">مثال ربح محتمل: 3,400 ج</div></div>
-        <div class="offer"><div class="price">500 ج</div><div class="gain">مثال ربح محتمل: 5,200 ج</div></div>
-        <div class="offer"><div class="price">800 ج</div><div class="gain">مثال ربح محتمل: 9,000 ج</div></div>
-        <div class="offer"><div class="price">1,000 ج</div><div class="gain">مثال ربح محتمل: 12,000 ج</div></div>
-        <div class="offer"><div class="price">2,000 ج</div><div class="gain">مثال ربح محتمل: 25,000 ج</div></div>
-      </div>
-
-      <!-- نموذج الاشتراك -->
-      <form id="signup" onsubmit="return handleSubmit(event)">
-        <input type="text" id="name" placeholder="الاسم الكامل" required />
-        <input type="tel" id="wallet" placeholder="رقم المحفظة (مثال: 01xxxxxxxx)" required />
-        <div class="buttons">
-          <button type="submit">طلب اشتراك</button>
-          <button type="button" class="secondary" onclick="copyInfo()">نسخ بيانات للّصق في الماسنجر</button>
-        </div>
-      </form>
-
-      <!-- شريط شهادات العملاء التجريبي -->
-      <div class="marquee" aria-hidden="false" title="شهادات المستخدمين">
-        <div class="track" id="track">
-          <span class="item">✅ 50 مستخدم جربوا الخدمة (تقييمات تجريبية)</span>
-          <span class="item">✅ تجربة سلسة وسياسة خصوصية واضحة</span>
-          <span class="item">✅ الدعم متاح للاستفسارات</span>
-          <span class="item">✅ لا نضمن أرباحاً، هذه أمثلة توضيحية فقط</span>
-          <!-- تتكرر لتستمر الحركة -->
-          <span class="item">✅ 50 مستخدم جربوا الخدمة (تقييمات تجريبية)</span>
-          <span class="item">✅ تجربة سلسة وسياسة خصوصية واضحة</span>
-        </div>
+<header class="hero">
+  <div class="card">
+    <div class="plinko-wrap">
+      <div>
+        <div class="plinko">PLINKO</div>
+        <div class="subtitle">تجربة ترفيهية — عروض اشتراك واضحة وشفافة</div>
       </div>
     </div>
+
+    <div class="ticker" aria-live="polite">
+      <div class="track">
+        <span class="tag">٥٠ عميل استلم</span>
+        <span class="tag">تعليقات إيجابية من عملائنا</span>
+        <span class="tag">إجراءات آمنة وسريعة</span>
+        <span class="tag">متاح دعم عبر الماسنجر</span>
+        <span class="tag">٥٠ عميل استلم</span>
+      </div>
+    </div>
+
+    <div class="offers" aria-hidden="false" style="margin-top:18px">
+      <div class="offer"><h3>عرض 200 ج</h3><p>قيمة متوقعة: حتى 2,600 ج (نتائج سابقة وليست مضمونة)</p></div>
+      <div class="offer"><h3>عرض 300 ج</h3><p>قيمة متوقعة: حتى 3,400 ج (نتائج سابقة وليست مضمونة)</p>
+      <div class="offer"><h3>عرض 500 ج</h3><p>قيمة متوقعة: حتى 5,200 ج (نتائج سابقة وليست مضمونة)</p></div>
+      <div class="offer"><h3>عرض 800 ج</h3><p>قيمة متوقعة: حتى 9,000 ج (نتائج سابقة وليست مضمونة)</p></div>
+      <div class="offer"><h3>عرض 1000 ج</h3><p>قيمة متوقعة: حتى 12,000 ج (نتائج سابقة وليست مضمونة)</p></div>
+      <div class="offer"><h3>عرض 2000 ج</h3><p>قيمة متوقعة: حتى 25,000 ج (نتائج سابقة وليست مضمونة)</p></div>
+    </div>
+
+    <p class="note">
+      ملاحظة مهمة: النتائج المعروضة بناءً على تجارب سابقة ومُقدرة للاطلاع فقط — **لا يوجد ضمان لربح محدد**. احرص على اللعب بمسؤولية. أي ادعاءات بضمان ربح 100% أو استخدام "سكريبتات" أو وسائل غير قانونية غير مقبولة وغير مسموح بها.
+    </p>
   </div>
 
+  <!-- العمود الخاص بالاشتراك -->
+  <aside class="card">
+    <h2 style="margin:0 0 8px 0">اطلب اشتراكك</h2>
+    <p class="muted" style="margin:0 0 12px 0">املأ الاسم ورقم المحفظة وسيصلك إشعار عبر الماسنجر.</p>
+
+    <form id="signup">
+      <input type="text" id="name" placeholder="الاسم الكامل" required />
+      <input type="tel" id="wallet" placeholder="رقم المحفظة/المحفظة" required />
+      <select id="offer">
+        <option value="200">عرض 200 ج</option>
+        <option value="300">عرض 300 ج</option>
+        <option value="500">عرض 500 ج</option>
+        <option value="800">عرض 800 ج</option>
+        <option value="1000">عرض 1000 ج</option>
+        <option value="2000">عرض 2000 ج</option>
+      </select>
+
+      <button type="submit" class="btn">طلب اشتراك — تواصل عبر الماسنجر</button>
+
+      <p class="note" style="margin-top:10px">عند الضغط، سيتم فتح صفحة الماسنجر لتأكيد طلبك. تأكد من كتابة الاسم ورقم المحفظة بدقة.</p>
+    </form>
+
+    <p style="margin-top:12px;font-size:13px;color:rgba(255,255,255,0.78)">
+      لم يتم تقديم وعود بضمان ربح. أي استخدام لطرق غير قانونية محظور.
+    </p>
+  </aside>
+</header>
+
 <script>
-  // وظيفة إرسال: تمنع الادعاءات، تحفظ محليًا (مثال) وتفتح الماسنجر ليتواصل المستخدم بنفسه
-  function handleSubmit(e){
+  // زر فتح مسنجر مع رسالة جاهزة — غيّر REPLACE_WITH_PAGE الى اسم صفحة الماسنجر الخاص بك
+  const MESSENGER_PAGE = 'REPLACE_WITH_PAGE'; // مثال: 'YourPageName' => https://m.me/YourPageName
+  function openMessenger(name,wallet,offer){
+    const message = `مرحبًا، أود الاشتراك باسم: ${name} - محفظة: ${wallet} - العرض: ${offer} ج. لقد قمت بالتسجيل في الموقع.`;
+    // استخدام رابط m.me مع ref لتمرير بيانات (ضع الرابط الفعلي لصفحتك)
+    const url = `https://m.me/${MESSENGER_PAGE}?ref=${encodeURIComponent(message)}`;
+    // ملاحظة: بعض إعدادات الماسنجر قد تتجاهل ref؛ إذا أردت رسالة مبدئية تلقائية قد تحتاج لدمج واجهات API أو استخدام صفحة وسيطة
+    window.open(url, '_blank');
+  }
+
+  // التعامل مع الفورم
+  document.getElementById('signup').addEventListener('submit', function(e){
     e.preventDefault();
     const name = document.getElementById('name').value.trim();
     const wallet = document.getElementById('wallet').value.trim();
-    if(!name || !wallet){ alert('من فضلك املأ الحقول المطلوبة'); return false; }
+    const offer = document.getElementById('offer').value;
 
-    // حفظ مؤقت محلي (مثال فقط) - لا تنشر بيانات حساسة على مواقع عامة
-    const submission = {name, wallet, time: new Date().toISOString()};
-    // هنا نحتفظ مؤقتًا في localStorage كـ demo — في منتج حقيقي استخدم سيرفر آمن وHTTPS
-    let arr = JSON.parse(localStorage.getItem('plinko_signups') || '[]');
-    arr.push(submission);
-    localStorage.setItem('plinko_signups', JSON.stringify(arr));
-
-    // ننسخ رسالة جاهزة للمستخدم ونفتح صفحة الماسنجر العامة
-    const message = `مرحبًا، أنا ${name}، أريد طلب اشتراك — رقم المحفظة: ${wallet}`;
-    copyText(message).then(()=>{
-      // نفتح messenger العام لتكملة المحادثة — ضع رابط صفحتك بدل placeholder
-      const messengerUrl = 'https://m.me/'; // ضع رابط صفحتك هنا إن أردت (مثال: https://m.me/YourPage)
-      window.open(messengerUrl, '_blank');
-      alert('تم نسخ رسالة الاشتراك تلقائياً. افتح Messenger والصق الرسالة لإرسالها.');
-    });
-
-    // إظهار تأكيد بصري
-    return false;
-  }
-
-  // نسخ للنّسخ في الحافظة
-  async function copyText(text){
-    if(navigator.clipboard && navigator.clipboard.writeText){
-      await navigator.clipboard.writeText(text);
-    }else{
-      // بديل قديم
-      const ta = document.createElement('textarea');
-      ta.value = text; document.body.appendChild(ta);
-      ta.select();
-      try{ document.execCommand('copy'); }catch(e){}
-      ta.remove();
+    if(!name || !wallet){
+      alert('من فضلك املأ الاسم ورقم المحفظة.');
+      return;
     }
-  }
 
-  // زر نسخة سريع: يأخذ الحقول أو نص عام
-  function copyInfo(){
-    const name = document.getElementById('name').value.trim() || 'الاسم';
-    const wallet = document.getElementById('wallet').value.trim() || 'رقم المحفظة';
-    const text = `مرحبًا، أنا ${name}، أريد طلب اشتراك — رقم المحفظة: ${wallet}`;
-    copyText(text).then(()=> alert('تم نسخ النص. افتح Messenger والصقه لإرساله.'));
-  }
+    // هنا نفتح الماسنجر — تأكد أن تستبدل MESSENGER_PAGE باسم صفحتك
+    if(MESSENGER_PAGE === 'REPLACE_WITH_PAGE'){
+      // بديل عند عدم وضع اسم الصفحة: نعرض رسالة نسخ بيانات ليقوم المستخدم بلصقها في الماسنجر
+      const msg = `نسخة الرسالة:\n${name} | محفظة: ${wallet} | العرض: ${offer} ج\n\nانسخ هذه الرسالة وافتح ماسنجر صفحتنا للتواصل.`;
+      if(confirm('لم يتم إعداد رابط الماسنجر. هل تريد نسخ رسالة التسجيل تلقائيًا؟')){
+        navigator.clipboard?.writeText(msg).then(()=>{
+          alert('تم نسخ الرسالة. افتح الماسنجر والصق الرسالة للتواصل.');
+          window.open('https://m.me', '_blank');
+        }, ()=>{ alert(msg); window.open('https://m.me', '_blank'); });
+      }
+    } else {
+      openMessenger(name,wallet,offer);
+    }
 
-  // لتحسين الوصول: إيقاف الحركة لوضع توفير الطاقة (اختياري)
-  if (window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
-    document.querySelectorAll('.plinko, .ball, .track').forEach(el=> el.style.animation = 'none');
-  }
+    // هنا يمكنك أيضاً إرسال بيانات إلى سيرفرك عبر fetch إذا أردت تسجيلها (مهم: التوافق مع القوانين)
+    // fetch('/api/register', {method:'POST', headers:{'content-type':'application/json'}, body:JSON.stringify({name,wallet,offer})})
+    //  .then(r=>r.json()).then(res=>console.log(res)).catch(()=>{});
+  });
+
+  // تحريك كرات إضافية بلطف لإعطاء إحساس حركة عشوائية
+  (function randomizeBalls(){
+    const balls = document.querySelectorAll('.ball');
+    balls.forEach((b,i)=>{
+      const dur = 6 + Math.random()*6;
+      const delay = Math.random()*-6;
+      b.style.animationDuration = dur + 's';
+      b.style.animationDelay = delay + 's';
+      // إحداثيات عشوائية داخل الشاشة
+      const left = 5 + Math.random()*85;
+      const top = 5 + Math.random()*80;
+      b.style.left = left + '%';
+      b.style.top = top + '%';
+    });
+  })();
 </script>
+
 </body>
 </html>
